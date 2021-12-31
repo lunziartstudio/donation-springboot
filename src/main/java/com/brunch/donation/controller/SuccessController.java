@@ -12,8 +12,8 @@ import ecpay.payment.integration.ecpayOperator.EcpayFunction;
 
 @RestController
 public class SuccessController {
-	protected String confPath = "/ecpay/payment/integration/config/EcpayPayment.xml";
-	protected Document doc;
+	
+	
 	
 	@GetMapping("/receive")
 	public ModelAndView success() {
@@ -25,8 +25,11 @@ public class SuccessController {
 	
 	@GetMapping("/nani")
 	public String nani() throws IOException {
-		URL fileURL = this.getClass().getResource(confPath);
-		System.out.println(fileURL.getPath());
+//		URL fileURL = this.getClass().getResource()
+		String confPath = "../ecpay/payment/integration/config/EcpayPayment.xml";
+		System.out.println(System.getProperty("java.class.path"));
+		System.out.println(this.getClass().getResource(confPath));
+//		System.out.println(fileURL.getPath());
 		
 		return "nani2";
 	}
