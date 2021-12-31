@@ -8,9 +8,11 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brunch.donation.config.Config;
+import com.brunch.donation.model.Donator;
 import com.brunch.donation.util.OrderNoUtil;
 
 import ecpay.payment.integration.AllInOne;
@@ -47,8 +49,13 @@ public class EcpayTest {
 		all = new AllInOne("");
 	}
 
-	@GetMapping("/ecpay")
-	public String ecpayTest() {
+	//@PostMapping("/donate")
+	@GetMapping("/donate")
+	public String ecpayTest(@RequestBody Donator donator) {
+		System.out.println(donator.getPaymentMethod());
+		System.out.println(donator.getAmount());
+		System.out.println(donator.getName());
+		System.out.println(donator.getMessage()); 
 		initial();
 		System.out.println("queryTradeInfo: " + postQueryTradeInfo());
 
