@@ -12,4 +12,15 @@ public class SuccessController {
 		mv.setViewName("receive.html");
 		return mv;
 	}
+	
+	@GetMapping("nani2")
+	public String nani2() {
+		
+		return "nani2";
+	}
+	
+	@GetMapping("/nani")
+	public String nani() {
+		return "nani2";
+	}
 }
