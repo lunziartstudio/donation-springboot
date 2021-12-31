@@ -47,7 +47,7 @@ public class EcpayTest {
 		all = new AllInOne("");
 	}
 
-	@GetMapping("ecpay")
+	@GetMapping("/ecpay")
 	public String ecpayTest() {
 		initial();
 		System.out.println("queryTradeInfo: " + postQueryTradeInfo());
