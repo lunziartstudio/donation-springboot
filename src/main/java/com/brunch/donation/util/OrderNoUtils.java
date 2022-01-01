@@ -2,10 +2,10 @@ package com.brunch.donation.util;
 
 import java.util.Random;
 
-public class OrderNoUtil {
+public class OrderNoUtils {
 	public static String genOrderNo(long currentTime) {
 		// orderNo = currentTime(13) + random(7)
-		OrderNoUtil orderUtil = new OrderNoUtil();
+		OrderNoUtils orderUtil = new OrderNoUtils();
 		String currentTimeStr = String.valueOf(currentTime);
 		Random rand = new Random();
 		int randomNum = rand.nextInt(9999999) + 1;

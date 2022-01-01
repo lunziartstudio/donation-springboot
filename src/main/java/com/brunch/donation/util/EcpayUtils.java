@@ -1,4 +1,4 @@
-package com.brunch.donation.controller;
+package com.brunch.donation.util;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.brunch.donation.config.Config;
 import com.brunch.donation.model.Donator;
-import com.brunch.donation.util.OrderNoUtil;
+import com.brunch.donation.util.OrderNoUtils;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
@@ -34,7 +34,7 @@ import ecpay.payment.integration.domain.QueryTradeObj;
 import ecpay.payment.integration.domain.TradeNoAioObj;
 
 @RestController
-public class EcpayTest {
+public class  EcpayUtils{
 	/*
 	 *  todo:
 	 *  1. 跟他們要: 付款完成網址
@@ -45,18 +45,20 @@ public class EcpayTest {
 	@Autowired
 	private Config config;
 
-	private static void initial() {
+	public static void initial() {
 		all = new AllInOne("");
 	}
 
 	//@PostMapping("/donate")
-	@GetMapping("/donate")
-	public String ecpayTest(@RequestBody Donator donator) {
-		System.out.println(donator.getPaymentMethod());
-		System.out.println(donator.getAmount());
-		System.out.println(donator.getName());
-		System.out.println(donator.getMessage()); 
+	@GetMapping("/donate-test")
+//	public String ecpayTest(@RequestBody Donator donator) {
+	public String ecpayTest() {
+//		System.out.println(donator.getPaymentMethod());
+//		System.out.println(donator.getAmount());
+//		System.out.println(donator.getName());
+//		System.out.println(donator.getMessage()); 
 		initial();
+		// 查詢自訂的交易編號
 		System.out.println("queryTradeInfo: " + postQueryTradeInfo());
 
 //	System.out.println("compare CheckMacValue method testing result: " + cmprChkMacValue());
@@ -64,18 +66,21 @@ public class EcpayTest {
 //	System.out.println("doAction: " + postDoAction());
 //	System.out.println("queryTradeInfo: " + postQueryTradeInfo());
 //	System.out.println("queryCreditCardPeriodInfo: " + postQueryCreditCardPeriodInfo());
-//	System.out.println("queryTrade: " + postQueryTrade());
+	System.out.println("queryTrade: " + postQueryTrade());
 //	System.out.println("tradeNoAio: " + postTradeNoAio());
 //	System.out.println("fundingReconDetail: " + postFundingReconDetail());
 //	System.out.println("aioCheckOutALL: " + genAioCheckOutALL());
 
 		
-	System.out.println("aioCheckOutOneTime: " + genAioCheckOutOneTime()); // 產生信用卡一次付清訂單物件
-	return  genAioCheckOutOneTime();
+//	System.out.println("aioCheckOutOneTime: " + genAioCheckOutOneTime()); // 產生信用卡一次付清訂單物件
+//	return genAioCheckOutOneTime();
+	return "";
 //	System.out.println("aioCheckOutCVS: " + genAioCheckOutCVS()); //產生CVS超商代碼繳費訂單物件
 //	System.out.println("aioCheckOutATM: " + genAioCheckOutATM()); //  產生ATM訂單物件
 //	System.out.println("aioCheckOutWebATM: " + genAioCheckOutWebATM()); // 產生網路ATM訂單物件
 	
+	
+// ---------- NO USE
 //	System.out.println("aioCheckOutDevide: " + genAioCheckOutDevide()); //  產生信用卡分期付款訂單物件
 //	System.out.println("aioCheckOutPeriod: " + genAioCheckOutPeriod()); // 產生信用卡定期定額訂單物件
 //	System.out.println("aioCheckOutBARCODE: " + genAioCheckOutBARCODE()); // 產生超商條碼繳費訂單物件
@@ -258,10 +263,10 @@ public class EcpayTest {
 		return form;
 	}
 
-	public String genAioCheckOutOneTime() {
+	public static String genAioCheckOutOneTime(Config config) {
 		AioCheckOutOneTime obj = new AioCheckOutOneTime();
 		long currentTime = System.currentTimeMillis();
-		String orderNo = OrderNoUtil.genOrderNo(currentTime);
+		String orderNo = OrderNoUtils.genOrderNo(currentTime);
 		String currentTimeStr = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
 		String totalAmount = "1000"; // to be filled, can not < 1
 		String tradeDesc = "DonationTradeDesc";
