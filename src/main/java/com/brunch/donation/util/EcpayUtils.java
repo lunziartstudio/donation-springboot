@@ -169,7 +169,10 @@ public class  EcpayUtils{
 		String tradeDesc = "DonationByWebATM";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
-		String streamer = donationForm.getName();
+		String target = donationForm.getTarget();
+		String payment_method = donationForm.getPayment_method();
+		String amount = donationForm.getAmount();
+		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -178,7 +181,10 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setCustomField1(streamer);
+		obj.setCustomField1(target);
+		obj.setCustomField2(payment_method);
+		obj.setCustomField3(amount);
+		obj.setCustomField4(message);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
@@ -208,7 +214,10 @@ public class  EcpayUtils{
 		String tradeDesc = "DonationByWebATM";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
-		String streamer = donationForm.getName();
+		String target = donationForm.getTarget();
+		String payment_method = donationForm.getPayment_method();
+		String amount = donationForm.getAmount();
+		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -218,7 +227,10 @@ public class  EcpayUtils{
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		obj.setExpireDate("7");
-		obj.setCustomField1(streamer);
+		obj.setCustomField1(target);
+		obj.setCustomField2(payment_method);
+		obj.setCustomField3(amount);
+		obj.setCustomField4(message);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
@@ -248,7 +260,10 @@ public class  EcpayUtils{
 		String tradeDesc = "DonationByCvsBarcode";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
-		String streamer = donationForm.getName();
+		String target = donationForm.getTarget();
+		String payment_method = donationForm.getPayment_method();
+		String amount = donationForm.getAmount();
+		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -257,7 +272,10 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setCustomField1(streamer);
+		obj.setCustomField1(target);
+		obj.setCustomField2(payment_method);
+		obj.setCustomField3(amount);
+		obj.setCustomField4(message);
 		// invoice
 //		obj.setInvoiceMark("Y");
 //		invoice.setRelateNumber("test202017test");
@@ -306,8 +324,10 @@ public class  EcpayUtils{
 		String tradeDesc = "DonationByCreditCard";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
-		String streamer = donationForm.getName();
-		System.out.println(returnURL);
+		String target = donationForm.getTarget();
+		String payment_method = donationForm.getPayment_method();
+		String amount = donationForm.getAmount();
+		String message = donationForm.getMessage();
 
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -317,7 +337,10 @@ public class  EcpayUtils{
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		obj.setRedeem("Y");
-		obj.setCustomField1(streamer);
+		obj.setCustomField1(target);
+		obj.setCustomField2(payment_method);
+		obj.setCustomField3(amount);
+		obj.setCustomField4(message);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}

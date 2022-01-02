@@ -12,7 +12,7 @@ public class Donation {
 	private ObjectId _id;
 	private String name;
 	private String payment_method;
-	private String amount;
+	private int amount;
 	private String message;
 	private Date create_time;
 	private Date modify_time;
@@ -27,7 +27,7 @@ public class Donation {
 
 	public String getName() {
 		return name;
-	} 
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -41,11 +41,11 @@ public class Donation {
 		this.payment_method = payment_method;
 	}
 
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
