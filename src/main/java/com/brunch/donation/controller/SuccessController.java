@@ -75,8 +75,8 @@ public class SuccessController {
 
 		if (EcpayUtils.cmprChkMacValue(config, dict)) {
 			try {
-				String merchantTradeNo = requstBody.get("CustomField1").split(",")[0];
-				String target = requstBody.get("CustomField1").split(",")[1];
+				String target = requstBody.get("CustomField1").split(",")[0];
+				String merchantTradeNo = requstBody.get("CustomField1").split(",")[1];
 				Donation donation = new Donation();
 				donation.set_id(new ObjectId());
 				donation.setMerchantTradeNo(merchantTradeNo);
