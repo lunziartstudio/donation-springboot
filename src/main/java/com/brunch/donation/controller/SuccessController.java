@@ -44,14 +44,32 @@ public class SuccessController {
 		mv.setViewName("receive.html");
 		return mv;
 	}
+	public static void main(String[] args) {
+		SuccessController sc = new SuccessController();
+		sc.test();
+
+	}
+	
+	public void test() {
+		EcpayUtils.initial();
+		System.out.println("POST recieve");
+		String checkMacValue = "9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE";
+		Config config = new Config();
+		config.setMerchantId("2000132");
+		System.out.println(checkMacValue);
+		System.out.println(EcpayUtils.cmprChkMacValue(config, checkMacValue));
+	}
 
 	@PostMapping("/receive")
 	public String receive(@RequestParam Map<String, String> requstBody) {
 		EcpayUtils.initial();
 		System.out.println("POST recieve");
 		String checkMacValue = requstBody.get("CheckMacValue");
+		String storeId = requstBody.get("MerchantID");
+		System.out.println(storeId);
 		System.out.println(checkMacValue);
 		System.out.println(EcpayUtils.cmprChkMacValue(config, checkMacValue));
+		// 9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE
 		// ecpay規定交易成功須回傳"1|OK"
 		if (EcpayUtils.cmprChkMacValue(config, checkMacValue)) {
 			String name = requstBody.get("CustomField1");
