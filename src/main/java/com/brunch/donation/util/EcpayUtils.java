@@ -87,10 +87,10 @@ public class  EcpayUtils{
 //	System.out.println("aioCheckOutBARCODE: " + genAioCheckOutBARCODE()); // 產生超商條碼繳費訂單物件
 	}
 
-	public static boolean cmprChkMacValue(Config config) {
+	public static boolean cmprChkMacValue(Config config, String checkMacValue) {
 		Hashtable<String, String> dict = new Hashtable<String, String>();
 		dict.put("MerchantID", config.getMerchantId());
-		dict.put("CheckMacValue", config.getCheckMacValue());
+		dict.put("CheckMacValue", checkMacValue);
 		return all.compareCheckMacValue(dict);
 	}
 
@@ -169,6 +169,7 @@ public class  EcpayUtils{
 		String tradeDesc = "DonationByWebATM";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
+		String streamer = donationForm.getName();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -177,13 +178,17 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
+		obj.setCustomField1(streamer);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
 
 	public static String genAioCheckOutALL(Config config, DonationForm donationForm) {
 		AioCheckOutALL obj = new AioCheckOutALL();
-		obj.setMerchantTradeNo("testCompany0004");
+		long currentTime = System.currentTimeMillis();
+		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
+		
+		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate("2017/01/01 08:05:23");
 		obj.setTotalAmount("50");
 		obj.setTradeDesc("test Description");
@@ -203,6 +208,7 @@ public class  EcpayUtils{
 		String tradeDesc = "DonationByWebATM";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
+		String streamer = donationForm.getName();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -212,6 +218,7 @@ public class  EcpayUtils{
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		obj.setExpireDate("7");
+		obj.setCustomField1(streamer);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
@@ -241,6 +248,7 @@ public class  EcpayUtils{
 		String tradeDesc = "DonationByCvsBarcode";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
+		String streamer = donationForm.getName();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -249,7 +257,7 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		
+		obj.setCustomField1(streamer);
 		// invoice
 //		obj.setInvoiceMark("Y");
 //		invoice.setRelateNumber("test202017test");
@@ -298,6 +306,7 @@ public class  EcpayUtils{
 		String tradeDesc = "DonationByCreditCard";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
+		String streamer = donationForm.getName();
 		System.out.println(returnURL);
 
 		obj.setMerchantTradeNo(merchantTradeNo);
@@ -308,6 +317,7 @@ public class  EcpayUtils{
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		obj.setRedeem("Y");
+		obj.setCustomField1(streamer);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}

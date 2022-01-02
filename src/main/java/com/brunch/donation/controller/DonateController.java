@@ -57,8 +57,8 @@ public class DonateController {
 			case "ATM":
 				htmlPage = EcpayUtils.genAioCheckOutATM(config, donationForm);
 				break;
-			case "TEST":
-				htmlPage = EcpayUtils.genAioCheckOutALL(config, donationForm);
+//			case "ALL":
+//				htmlPage = EcpayUtils.genAioCheckOutALL(config, donationForm);
 			default:
 				break;
 		}
