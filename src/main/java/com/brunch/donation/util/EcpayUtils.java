@@ -87,10 +87,10 @@ public class  EcpayUtils{
 //	System.out.println("aioCheckOutBARCODE: " + genAioCheckOutBARCODE()); // 產生超商條碼繳費訂單物件
 	}
 
-	public static boolean cmprChkMacValue(Config config, String checkMacValue) {
-		Hashtable<String, String> dict = new Hashtable<String, String>();
-		dict.put("MerchantID", config.getMerchantId());
-		dict.put("CheckMacValue", checkMacValue);
+	public static boolean cmprChkMacValue(Config config, Hashtable<String, String> dict) {
+//		Hashtable<String, String> dict = new Hashtable<String, String>();
+//		dict.put("MerchantID", config.getMerchantId());
+//		dict.put("CheckMacValue", "50BE3989953C1734E32DD18EB23698241E035F9CBCAC74371CCCF09E0E15BD61");
 		return all.compareCheckMacValue(dict);
 	}
 

@@ -3,6 +3,7 @@ package com.brunch.donation.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -52,26 +53,30 @@ public class SuccessController {
 	
 	public void test() {
 		EcpayUtils.initial();
-		System.out.println("POST recieve");
-		String checkMacValue = "9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE";
-		Config config = new Config();
-		config.setMerchantId("2000132");
-		System.out.println(checkMacValue);
-		System.out.println(EcpayUtils.cmprChkMacValue(config, checkMacValue));
+//		System.out.println("POST recieve");
+//		String checkMacValue = "9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE";
+//		Config config = new Config();
+//		config.setMerchantId("2000132");
+//		System.out.println(checkMacValue);
+//		System.out.println(EcpayUtils.cmprChkMacValue(config, checkMacValue));
+//		Object aio
+//		EcpayFunction.objToHashtable(aio);
 	}
 
 	@PostMapping("/receive")
 	public String receive(@RequestParam Map<String, String> requstBody) {
 		EcpayUtils.initial();
 		System.out.println("POST recieve");
-		String checkMacValue = requstBody.get("CheckMacValue");
-		String storeId = requstBody.get("MerchantID");
-		System.out.println(storeId);
-		System.out.println(checkMacValue);
-		System.out.println(EcpayUtils.cmprChkMacValue(config, checkMacValue));
 		// 9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE
 		// ecpay規定交易成功須回傳"1|OK"
-		if (EcpayUtils.cmprChkMacValue(config, checkMacValue)) {
+		
+		Hashtable<String, String> dict = new Hashtable<String, String>();
+		dict.putAll(requstBody);
+		System.out.println("map =[" + requstBody);
+		System.out.println("hashtable =[" + dict);
+		System.out.println(EcpayUtils.cmprChkMacValue(config, dict));
+		
+		if (EcpayUtils.cmprChkMacValue(config, dict)) {
 			String name = requstBody.get("CustomField1");
 			Streamer streamer = streamerRepo.findStreamerByName(name);
 			System.out.println(streamer.getId());

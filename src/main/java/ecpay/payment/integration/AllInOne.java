@@ -81,7 +81,6 @@ public class AllInOne extends AllInOneBase{
 		}
 		try {
 			checkMacValue = EcpayFunction.genCheckMacValue(HashKey, HashIV, params);
-			System.out.println(checkMacValue);
 		} catch (EcpayException e) {
 			throw new EcpayException(ErrorMessage.GEN_CHECK_MAC_VALUE_FAIL);
 		}
