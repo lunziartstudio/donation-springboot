@@ -51,11 +51,11 @@ public class DonateController {
 				break;
 			//	fail
 			case "webATM":
-				htmlPage = EcpayUtils.genAioCheckOutATM(config, donationForm);
+				htmlPage = EcpayUtils.genAioCheckOutWebATM(config, donationForm);
 				break;
 			// fail
 			case "ATM":
-				htmlPage = EcpayUtils.genAioCheckOutWebATM(config, donationForm);
+				htmlPage = EcpayUtils.genAioCheckOutATM(config, donationForm);
 				break;
 			case "TEST":
 				htmlPage = EcpayUtils.genAioCheckOutALL(config, donationForm);
