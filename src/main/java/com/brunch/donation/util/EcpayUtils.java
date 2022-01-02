@@ -232,7 +232,7 @@ public class  EcpayUtils{
 
 	public static String genAioCheckOutCVS(Config config, DonationForm donationForm) {
 		AioCheckOutCVS obj = new AioCheckOutCVS();
-		InvoiceObj invoice = new InvoiceObj();
+//		InvoiceObj invoice = new InvoiceObj();
 		
 		long currentTime = System.currentTimeMillis();
 		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
@@ -270,7 +270,7 @@ public class  EcpayUtils{
 //		invoice.setInvoiceItemWord("個");
 //		invoice.setInvoiceItemPrice("50");
 //		invoice.setInvoiceItemTaxType("1");
-		String form = all.aioCheckOut(obj, invoice);
+		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
 
