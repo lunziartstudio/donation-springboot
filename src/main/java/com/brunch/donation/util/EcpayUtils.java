@@ -172,6 +172,7 @@ public class  EcpayUtils{
 		String target = donationForm.getTarget();
 		String payment_method = donationForm.getPayment_method();
 		String amount = donationForm.getAmount();
+		String donator = donationForm.getName();
 		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
@@ -184,7 +185,7 @@ public class  EcpayUtils{
 		obj.setCustomField1(target);
 		obj.setCustomField2(payment_method);
 		obj.setCustomField3(amount);
-		obj.setCustomField4(message);
+		obj.setCustomField4(donator + "," + message);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
@@ -217,6 +218,7 @@ public class  EcpayUtils{
 		String target = donationForm.getTarget();
 		String payment_method = donationForm.getPayment_method();
 		String amount = donationForm.getAmount();
+		String donator = donationForm.getName();
 		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
@@ -230,7 +232,7 @@ public class  EcpayUtils{
 		obj.setCustomField1(target);
 		obj.setCustomField2(payment_method);
 		obj.setCustomField3(amount);
-		obj.setCustomField4(message);
+		obj.setCustomField4(donator + "," + message);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
@@ -263,6 +265,7 @@ public class  EcpayUtils{
 		String target = donationForm.getTarget();
 		String payment_method = donationForm.getPayment_method();
 		String amount = donationForm.getAmount();
+		String donator = donationForm.getName();
 		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
@@ -275,7 +278,7 @@ public class  EcpayUtils{
 		obj.setCustomField1(target);
 		obj.setCustomField2(payment_method);
 		obj.setCustomField3(amount);
-		obj.setCustomField4(message);
+		obj.setCustomField4(donator + "," + message);
 		// invoice
 //		obj.setInvoiceMark("Y");
 //		invoice.setRelateNumber("test202017test");
@@ -327,6 +330,7 @@ public class  EcpayUtils{
 		String target = donationForm.getTarget();
 		String payment_method = donationForm.getPayment_method();
 		String amount = donationForm.getAmount();
+		String donator = donationForm.getName();
 		String message = donationForm.getMessage();
 
 		obj.setMerchantTradeNo(merchantTradeNo);
@@ -340,7 +344,7 @@ public class  EcpayUtils{
 		obj.setCustomField1(target);
 		obj.setCustomField2(payment_method);
 		obj.setCustomField3(amount);
-		obj.setCustomField4(message);
+		obj.setCustomField4(donator + "," + message);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}

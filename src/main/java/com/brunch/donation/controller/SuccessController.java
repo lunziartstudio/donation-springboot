@@ -81,7 +81,6 @@ public class SuccessController {
 	@PostMapping("/receive")
 	public String receive(@RequestParam Map<String, String> requstBody) {
 		EcpayUtils.initial();
-		System.out.println("POST recieve");
 		// 9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE
 		// ecpay規定交易成功須回傳"1|OK"
 		boolean isSuccess = false;
@@ -96,7 +95,10 @@ public class SuccessController {
 				donation.set_id(new ObjectId());
 				donation.setPayment_method(requstBody.get("CustomField2"));
 				donation.setAmount(Integer.valueOf(requstBody.get("CustomField3")));
-				donation.setMessage(requstBody.get("CustomField4"));
+				String donator = requstBody.get("CustomField4").split(",")[0];
+				String message = requstBody.get("CustomField4").split(",")[1];
+				donation.setName(donator);
+				donation.setMessage(message);
 				// MongoDB 需要轉換+8小時
 				Calendar ca = Calendar.getInstance();
 				ca.setTime(new Date());
@@ -112,6 +114,7 @@ public class SuccessController {
 				log.error("Insert donation fail, requestBody = ");
 			}
 		}
+		log.info("isSuccess = [" + isSuccess + "]");
 		return isSuccess ? "1|OK" : "0|ERROR|";
 	}
 }
