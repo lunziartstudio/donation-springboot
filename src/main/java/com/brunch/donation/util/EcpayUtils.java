@@ -162,18 +162,26 @@ public class  EcpayUtils{
 
 	public static String genAioCheckOutWebATM(Config config, DonationForm donationForm) {
 		AioCheckOutWebATM obj = new AioCheckOutWebATM();
-		obj.setMerchantTradeNo("testCompany000444");
-		obj.setMerchantTradeDate("2017/01/01 08:05:08");
-		obj.setTotalAmount("100");
-		obj.setTradeDesc("test Description");
-		obj.setItemName("Test Item");
-		obj.setReturnURL("http://211.23.128.214:5000");
+		long currentTime = System.currentTimeMillis();
+		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
+		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
+		String totalAmount = String.valueOf(donationForm.getAmount());
+		String tradeDesc = "DonationByWebATM";
+		String itemName = "Donation";
+		String returnURL = config.getReturnURL();
+		
+		obj.setMerchantTradeNo(merchantTradeNo);
+		obj.setMerchantTradeDate(merchantTradeDate);
+		obj.setTotalAmount(totalAmount);
+		obj.setTradeDesc(tradeDesc);
+		obj.setItemName(itemName);
+		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
 
-	public static String genAioCheckOutALL() {
+	public static String genAioCheckOutALL(Config config, DonationForm donationForm) {
 		AioCheckOutALL obj = new AioCheckOutALL();
 		obj.setMerchantTradeNo("testCompany0004");
 		obj.setMerchantTradeDate("2017/01/01 08:05:23");
@@ -188,14 +196,22 @@ public class  EcpayUtils{
 
 	public static String genAioCheckOutATM(Config config, DonationForm donationForm) {
 		AioCheckOutATM obj = new AioCheckOutATM();
-		obj.setMerchantTradeNo("testCompany0005");
-		obj.setMerchantTradeDate("2017/01/01 08:05:23");
-		obj.setTotalAmount("50");
-		obj.setTradeDesc("test Description");
-		obj.setItemName("TestItem");
-		obj.setReturnURL("http://211.23.128.214:5000");
+		long currentTime = System.currentTimeMillis();
+		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
+		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
+		String totalAmount = String.valueOf(donationForm.getAmount());
+		String tradeDesc = "DonationByWebATM";
+		String itemName = "Donation";
+		String returnURL = config.getReturnURL();
+		
+		obj.setMerchantTradeNo(merchantTradeNo);
+		obj.setMerchantTradeDate(merchantTradeDate);
+		obj.setTotalAmount(totalAmount);
+		obj.setTradeDesc(tradeDesc);
+		obj.setItemName(itemName);
+		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setExpireDate("6");
+		obj.setExpireDate("7");
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
