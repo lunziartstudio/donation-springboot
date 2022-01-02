@@ -62,7 +62,7 @@ public class  EcpayUtils{
 		// 查詢自訂的交易編號
 		System.out.println("queryTradeInfo: " + postQueryTradeInfo());
 
-	System.out.println("compare CheckMacValue method testing result: " + cmprChkMacValue());
+//	System.out.println("compare CheckMacValue method testing result: " + cmprChkMacValue());
 //	System.out.println("apple pay create order: " + postCreateServerOrder());
 //	System.out.println("doAction: " + postDoAction());
 //	System.out.println("queryTradeInfo: " + postQueryTradeInfo());
