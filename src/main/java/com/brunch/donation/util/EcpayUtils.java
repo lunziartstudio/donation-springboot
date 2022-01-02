@@ -154,7 +154,7 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setCustomField1(target);
+		obj.setCustomField1(target + "," + merchantTradeNo);
 		obj.setCustomField2(payment_method);
 		obj.setCustomField3(amount);
 		obj.setCustomField4(donator + "," + message);
@@ -201,7 +201,7 @@ public class  EcpayUtils{
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		obj.setExpireDate("7");
-		obj.setCustomField1(target);
+		obj.setCustomField1(target + "," + merchantTradeNo);
 		obj.setCustomField2(payment_method);
 		obj.setCustomField3(amount);
 		obj.setCustomField4(donator + "," + message);
@@ -247,7 +247,7 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setCustomField1(target);
+		obj.setCustomField1(target + "," + merchantTradeNo);
 		obj.setCustomField2(payment_method);
 		obj.setCustomField3(amount);
 		obj.setCustomField4(donator + "," + message);
@@ -313,7 +313,7 @@ public class  EcpayUtils{
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		obj.setRedeem("Y");
-		obj.setCustomField1(target);
+		obj.setCustomField1(target + "," + merchantTradeNo);
 		obj.setCustomField2(payment_method);
 		obj.setCustomField3(amount);
 		obj.setCustomField4(donator + "," + message);

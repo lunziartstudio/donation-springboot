@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Donation {
 	@Id
 	private ObjectId _id;
+	private String merchantTradeNo;
 	private String name;
 	private String payment_method;
 	private int amount;
@@ -23,6 +24,14 @@ public class Donation {
 
 	public void set_id(ObjectId _id) {
 		this._id = _id;
+	}
+
+	public String getMerchantTradeNo() {
+		return merchantTradeNo;
+	}
+
+	public void setMerchantTradeNo(String merchantTradeNo) {
+		this.merchantTradeNo = merchantTradeNo;
 	}
 
 	public String getName() {

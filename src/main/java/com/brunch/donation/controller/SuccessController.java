@@ -75,9 +75,11 @@ public class SuccessController {
 
 		if (EcpayUtils.cmprChkMacValue(config, dict)) {
 			try {
-				String name = requstBody.get("CustomField1");
+				String merchantTradeNo = requstBody.get("CustomField1").split(",")[0];
+				String target = requstBody.get("CustomField1").split(",")[1];
 				Donation donation = new Donation();
 				donation.set_id(new ObjectId());
+				donation.setMerchantTradeNo(merchantTradeNo);
 				donation.setPayment_method(requstBody.get("CustomField2"));
 				donation.setAmount(Integer.valueOf(requstBody.get("CustomField3")));
 				String donator = requstBody.get("CustomField4").split(",")[0];
@@ -90,7 +92,7 @@ public class SuccessController {
 				ca.add(Calendar.HOUR_OF_DAY, 8);
 				donation.setCreate_time(ca.getTime());
 				donation.setModify_time(ca.getTime());
-				Streamer streamer = streamerRepo.findStreamerByName(name);
+				Streamer streamer = streamerRepo.findStreamerByName(target);
 				List<Donation> donationList = streamer.getDonation();
 				donationList.add(donation);
 				streamerRepo.save(streamer);
