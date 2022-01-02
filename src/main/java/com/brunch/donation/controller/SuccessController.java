@@ -14,7 +14,6 @@ import java.util.TimeZone;
 import javax.websocket.server.PathParam;
 
 import org.apache.catalina.filters.ExpiresFilter.XServletOutputStream;
-import org.apache.commons.collections.MapUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
