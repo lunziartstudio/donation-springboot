@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,31 +30,32 @@ public class DonateController {
 	@Autowired
 	EcpayUtils ecpayUtils;
 	
-	@GetMapping("/donate/{payment_method}")
-//	@PostMapping("/donate")
-//	public String donation(@RequestBody DonationForm donationForm) {
-	public String donation(@PathVariable String payment_method) {
+	
+//	@GetMapping("/donate/{payment_method}")
+	@PostMapping("/donate")
+	public String donation(@RequestBody DonationForm donationForm) {
+//	public String donation(@PathVariable String payment_method) {
 //		getDonationFormDetail(donationForm);
-		
+//		DonationForm donationForm = null;
 		// init ecpay
 		EcpayUtils.initial();
 		String htmlPage = "";
-		switch(payment_method) {
-//		switch(donationForm.getPayment_method()) {
+//		switch(payment_method) {
+		switch(donationForm.getPayment_method()) {
 			case "credit_card":
-				htmlPage = EcpayUtils.genAioCheckOutOneTime(config);
+				htmlPage = EcpayUtils.genAioCheckOutOneTime(config, donationForm);
 				break;
 			// fail
 			case "cvs_barcode":
-				htmlPage = EcpayUtils.genAioCheckOutCVS();
+				htmlPage = EcpayUtils.genAioCheckOutCVS(config, donationForm);
 				break;
 			//	fail
 			case "webATM":
-				htmlPage = EcpayUtils.genAioCheckOutATM();
+				htmlPage = EcpayUtils.genAioCheckOutATM(config, donationForm);
 				break;
 			// fail
 			case "ATM":
-				htmlPage = EcpayUtils.genAioCheckOutWebATM();
+				htmlPage = EcpayUtils.genAioCheckOutWebATM(config, donationForm);
 				break;
 			default:
 				break;

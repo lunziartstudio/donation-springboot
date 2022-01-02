@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brunch.donation.config.Config;
+import com.brunch.donation.model.DonationForm;
 import com.brunch.donation.model.Donator;
 import com.brunch.donation.util.OrderNoUtils;
 
@@ -159,7 +160,7 @@ public class  EcpayUtils{
 		return all.queryCreditCardPeriodInfo(obj);
 	}
 
-	public static String genAioCheckOutWebATM() {
+	public static String genAioCheckOutWebATM(Config config, DonationForm donationForm) {
 		AioCheckOutWebATM obj = new AioCheckOutWebATM();
 		obj.setMerchantTradeNo("testCompany000444");
 		obj.setMerchantTradeDate("2017/01/01 08:05:08");
@@ -185,7 +186,7 @@ public class  EcpayUtils{
 		return form;
 	}
 
-	public static String genAioCheckOutATM() {
+	public static String genAioCheckOutATM(Config config, DonationForm donationForm) {
 		AioCheckOutATM obj = new AioCheckOutATM();
 		obj.setMerchantTradeNo("testCompany0005");
 		obj.setMerchantTradeDate("2017/01/01 08:05:23");
@@ -213,7 +214,7 @@ public class  EcpayUtils{
 		return form;
 	}
 
-	public static String genAioCheckOutCVS() {
+	public static String genAioCheckOutCVS(Config config, DonationForm donationForm) {
 		AioCheckOutCVS obj = new AioCheckOutCVS();
 		InvoiceObj invoice = new InvoiceObj();
 		UUID uid = UUID.randomUUID();
@@ -263,15 +264,16 @@ public class  EcpayUtils{
 		return form;
 	}
 
-	public static String genAioCheckOutOneTime(Config config) {
+	public static String genAioCheckOutOneTime(Config config, DonationForm donationForm) {
 		AioCheckOutOneTime obj = new AioCheckOutOneTime();
 		long currentTime = System.currentTimeMillis();
 		String orderNo = OrderNoUtils.genOrderNo(currentTime);
 		String currentTimeStr = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
-		String totalAmount = "1000"; // to be filled, can not < 1
+		String totalAmount = String.valueOf(donationForm.getAmount());
 		String tradeDesc = "DonationTradeDesc";
 		String itemName = "DonationItemName";
 		String returnURL = config.getReturnURL();
+		System.out.println(returnURL);
 
 		obj.setMerchantTradeNo(orderNo);
 		obj.setMerchantTradeDate(currentTimeStr);
