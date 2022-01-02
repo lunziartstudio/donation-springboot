@@ -50,6 +50,8 @@ public class SuccessController {
 		EcpayUtils.initial();
 		System.out.println("POST recieve");
 		String checkMacValue = requstBody.get("CheckMacValue");
+		System.out.println(checkMacValue);
+		System.out.println(EcpayUtils.cmprChkMacValue(config, checkMacValue));
 		// ecpay規定交易成功須回傳"1|OK"
 		if (EcpayUtils.cmprChkMacValue(config, checkMacValue)) {
 			String name = requstBody.get("CustomField1");
