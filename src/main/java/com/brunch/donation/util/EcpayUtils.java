@@ -217,34 +217,43 @@ public class  EcpayUtils{
 	public static String genAioCheckOutCVS(Config config, DonationForm donationForm) {
 		AioCheckOutCVS obj = new AioCheckOutCVS();
 		InvoiceObj invoice = new InvoiceObj();
-		UUID uid = UUID.randomUUID();
-		obj.setMerchantTradeNo(uid.toString().replaceAll("-", "").substring(0, 20));
-		obj.setMerchantTradeDate("2017/01/01 08:05:23");
-		obj.setTotalAmount("50");
-		obj.setTradeDesc("test Description");
-		obj.setItemName("TestItem");
-		obj.setReturnURL("http://211.23.128.214:5000");
+		
+		long currentTime = System.currentTimeMillis();
+		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
+		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
+		String totalAmount = String.valueOf(donationForm.getAmount());
+		String tradeDesc = "DonationByCvsBarcode";
+		String itemName = "Donation";
+		String returnURL = config.getReturnURL();
+		
+		obj.setMerchantTradeNo(merchantTradeNo);
+		obj.setMerchantTradeDate(merchantTradeDate);
+		obj.setTotalAmount(totalAmount);
+		obj.setTradeDesc(tradeDesc);
+		obj.setItemName(itemName);
+		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setStoreExpireDate("3");
-		obj.setInvoiceMark("Y");
-		invoice.setRelateNumber("test202017test");
-		invoice.setCustomerID("123456");
-		invoice.setCarruerType("1");
-		invoice.setTaxType("1");
-		invoice.setCarruerNum("");
-		invoice.setDonation("0");
-		invoice.setLoveCode("X123456");
-		invoice.setPrint("0");
-		invoice.setCustomerName("Mark");
-		invoice.setCustomerAddr("台北市南港區三重路");
-		invoice.setCustomerPhone("0911429215");
-		invoice.setDelayDay("1");
-		invoice.setInvType("07");
-		invoice.setInvoiceItemName("測試");
-		invoice.setInvoiceItemCount("1");
-		invoice.setInvoiceItemWord("個");
-		invoice.setInvoiceItemPrice("50");
-		invoice.setInvoiceItemTaxType("1");
+		
+		// invoice
+//		obj.setInvoiceMark("Y");
+//		invoice.setRelateNumber("test202017test");
+//		invoice.setCustomerID("123456");
+//		invoice.setCarruerType("1");
+//		invoice.setTaxType("1");
+//		invoice.setCarruerNum("");
+//		invoice.setDonation("0");
+//		invoice.setLoveCode("X123456");
+//		invoice.setPrint("0");
+//		invoice.setCustomerName("Mark");
+//		invoice.setCustomerAddr("台北市南港區三重路");
+//		invoice.setCustomerPhone("0911429215");
+//		invoice.setDelayDay("1");
+//		invoice.setInvType("07");
+//		invoice.setInvoiceItemName("測試");
+//		invoice.setInvoiceItemCount("1");
+//		invoice.setInvoiceItemWord("個");
+//		invoice.setInvoiceItemPrice("50");
+//		invoice.setInvoiceItemTaxType("1");
 		String form = all.aioCheckOut(obj, invoice);
 		return form;
 	}
@@ -267,16 +276,16 @@ public class  EcpayUtils{
 	public static String genAioCheckOutOneTime(Config config, DonationForm donationForm) {
 		AioCheckOutOneTime obj = new AioCheckOutOneTime();
 		long currentTime = System.currentTimeMillis();
-		String orderNo = OrderNoUtils.genOrderNo(currentTime);
-		String currentTimeStr = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
+		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
+		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
 		String totalAmount = String.valueOf(donationForm.getAmount());
-		String tradeDesc = "DonationTradeDesc";
-		String itemName = "DonationItemName";
+		String tradeDesc = "DonationByCreditCard";
+		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
 		System.out.println(returnURL);
 
-		obj.setMerchantTradeNo(orderNo);
-		obj.setMerchantTradeDate(currentTimeStr);
+		obj.setMerchantTradeNo(merchantTradeNo);
+		obj.setMerchantTradeDate(merchantTradeDate);
 		obj.setTotalAmount(totalAmount);
 		obj.setTradeDesc(tradeDesc);
 		obj.setItemName(itemName);
