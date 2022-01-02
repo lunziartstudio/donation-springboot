@@ -34,7 +34,7 @@ public class SuccessController {
 	@PostMapping("/receive")
 	public String receive() {
 		System.out.println("POST recieve");
-		return "recieve";
+		return "1|OK";
 	}
 
 	@GetMapping("/test")
