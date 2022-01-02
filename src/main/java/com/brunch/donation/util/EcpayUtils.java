@@ -3,19 +3,10 @@ package com.brunch.donation.util;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Hashtable;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brunch.donation.config.Config;
 import com.brunch.donation.model.DonationForm;
-import com.brunch.donation.model.Donator;
-import com.brunch.donation.util.OrderNoUtils;
-
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
 import ecpay.payment.integration.domain.AioCheckOutATM;
@@ -28,7 +19,6 @@ import ecpay.payment.integration.domain.AioCheckOutWebATM;
 import ecpay.payment.integration.domain.CreateServerOrderObj;
 import ecpay.payment.integration.domain.DoActionObj;
 import ecpay.payment.integration.domain.FundingReconDetailObj;
-import ecpay.payment.integration.domain.InvoiceObj;
 import ecpay.payment.integration.domain.QueryCreditCardPeriodInfoObj;
 import ecpay.payment.integration.domain.QueryTradeInfoObj;
 import ecpay.payment.integration.domain.QueryTradeObj;
@@ -36,55 +26,37 @@ import ecpay.payment.integration.domain.TradeNoAioObj;
 
 @RestController
 public class  EcpayUtils{
-	/*
-	 *  todo:
-	 *  1. 跟他們要: 付款完成網址
-	 */
 	
 	public static AllInOne all;
 	
-	@Autowired
-	private Config config;
-
 	public static void initial() {
 		all = new AllInOne("");
 	}
 
-	//@PostMapping("/donate")
-	@GetMapping("/donate-test")
-//	public String ecpayTest(@RequestBody Donator donator) {
-	public String ecpayTest() {
-//		System.out.println(donator.getPaymentMethod());
-//		System.out.println(donator.getAmount());
-//		System.out.println(donator.getName());
-//		System.out.println(donator.getMessage()); 
-		initial();
-		// 查詢自訂的交易編號
-		System.out.println("queryTradeInfo: " + postQueryTradeInfo());
+	public void ecpayTest() {
 
-//	System.out.println("compare CheckMacValue method testing result: " + cmprChkMacValue());
-//	System.out.println("apple pay create order: " + postCreateServerOrder());
-//	System.out.println("doAction: " + postDoAction());
-//	System.out.println("queryTradeInfo: " + postQueryTradeInfo());
-//	System.out.println("queryCreditCardPeriodInfo: " + postQueryCreditCardPeriodInfo());
-	System.out.println("queryTrade: " + postQueryTrade());
-//	System.out.println("tradeNoAio: " + postTradeNoAio());
-//	System.out.println("fundingReconDetail: " + postFundingReconDetail());
-//	System.out.println("aioCheckOutALL: " + genAioCheckOutALL());
-
+	//  Used
+	//	initial(); //初始化
+	//	System.out.println("queryTradeInfo: " + postQueryTradeInfo()); // 查詢自訂的交易編號
+	//	System.out.println("aioCheckOutOneTime: " + genAioCheckOutOneTime()); // 產生信用卡一次付清訂單物件
+	//	System.out.println("aioCheckOutCVS: " + genAioCheckOutCVS()); //產生CVS超商代碼繳費訂單物件
+	//	System.out.println("aioCheckOutATM: " + genAioCheckOutATM()); //  產生ATM訂單物件
+	//	System.out.println("aioCheckOutWebATM: " + genAioCheckOutWebATM()); // 產生網路ATM訂單物件
+	//	System.out.println("compare CheckMacValue method testing result: " + cmprChkMacValue()); //驗證檢查碼
 		
-//	System.out.println("aioCheckOutOneTime: " + genAioCheckOutOneTime()); // 產生信用卡一次付清訂單物件
-//	return genAioCheckOutOneTime();
-	return "";
-//	System.out.println("aioCheckOutCVS: " + genAioCheckOutCVS()); //產生CVS超商代碼繳費訂單物件
-//	System.out.println("aioCheckOutATM: " + genAioCheckOutATM()); //  產生ATM訂單物件
-//	System.out.println("aioCheckOutWebATM: " + genAioCheckOutWebATM()); // 產生網路ATM訂單物件
+	//  Did not use.
+	//	System.out.println("aioCheckOutDevide: " + genAioCheckOutDevide()); //  產生信用卡分期付款訂單物件
+	//	System.out.println("aioCheckOutPeriod: " + genAioCheckOutPeriod()); // 產生信用卡定期定額訂單物件
+	//	System.out.println("aioCheckOutBARCODE: " + genAioCheckOutBARCODE()); // 產生超商條碼繳費訂單物件
+	//  System.out.println("apple pay create order: " + postCreateServerOrder()); // Apple Pay
+	//  System.out.println("aioCheckOutALL: " + genAioCheckOutALL()); // 上述全部可付款方式
+		
 	
-	
-// ---------- NO USE
-//	System.out.println("aioCheckOutDevide: " + genAioCheckOutDevide()); //  產生信用卡分期付款訂單物件
-//	System.out.println("aioCheckOutPeriod: " + genAioCheckOutPeriod()); // 產生信用卡定期定額訂單物件
-//	System.out.println("aioCheckOutBARCODE: " + genAioCheckOutBARCODE()); // 產生超商條碼繳費訂單物件
+	//	System.out.println("queryTrade: " + postQueryTrade()); //查詢信用卡單筆明細記錄
+	//	System.out.println("tradeNoAio: " + postTradeNoAio()); //下載特店對帳媒體檔
+	//	System.out.println("fundingReconDetail: " + postFundingReconDetail()); //下載信用卡撥款對帳資料檔
+	//	System.out.println("queryCreditCardPeriodInfo: " + postQueryCreditCardPeriodInfo()); //信用卡定期定額訂單查詢
+	//	System.out.println("doAction: " + postDoAction()); //信用卡請退款功能 
 	}
 
 	public static boolean cmprChkMacValue(Config config, Hashtable<String, String> dict) {

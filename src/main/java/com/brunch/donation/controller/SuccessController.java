@@ -1,39 +1,24 @@
 package com.brunch.donation.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
-
-import javax.websocket.server.PathParam;
-
-import org.apache.catalina.filters.ExpiresFilter.XServletOutputStream;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.w3c.dom.Document;
-
 import com.brunch.donation.config.Config;
 import com.brunch.donation.model.Donation;
 import com.brunch.donation.model.Streamer;
 import com.brunch.donation.repository.StreamerRepository;
 import com.brunch.donation.util.EcpayUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ecpay.payment.integration.ecpayOperator.EcpayFunction;
 
 @RestController
 public class SuccessController {

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Configuration("ecpayConfig")
 public class Config {
 	private String returnURL;
-	private String merchantId;
 
 	public String getReturnURL() {
 		return returnURL;
@@ -16,13 +15,5 @@ public class Config {
 
 	public void setReturnURL(String returnURL) {
 		this.returnURL = returnURL;
-	}
-
-	public String getMerchantId() {
-		return merchantId;
-	}
-
-	public void setMerchantId(String merchantId) {
-		this.merchantId = merchantId;
 	}
 }

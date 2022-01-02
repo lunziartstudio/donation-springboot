@@ -3,9 +3,6 @@ package com.brunch.donation.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +14,6 @@ import com.brunch.donation.model.Streamer;
 import com.brunch.donation.repository.StreamerRepository;
 import com.brunch.donation.util.EcpayUtils;
 
-import ecpay.payment.integration.AllInOne;
 
 @RestController
 public class DonateController {
@@ -45,15 +41,12 @@ public class DonateController {
 			case "credit_card":
 				htmlPage = EcpayUtils.genAioCheckOutOneTime(config, donationForm);
 				break;
-			// fail
 			case "cvs_barcode":
 				htmlPage = EcpayUtils.genAioCheckOutCVS(config, donationForm);
 				break;
-			//	fail
 			case "webATM":
 				htmlPage = EcpayUtils.genAioCheckOutWebATM(config, donationForm);
 				break;
-			// fail
 			case "ATM":
 				htmlPage = EcpayUtils.genAioCheckOutATM(config, donationForm);
 				break;
@@ -62,8 +55,8 @@ public class DonateController {
 			default:
 				break;
 		}
-//		System.out.println("htmlPage = [" + htmlPage + "]");
 		return htmlPage;
+		
 		// QUERY ORDER
 //		System.out.println("queryTradeInfo: " + EcpayUtils.postQueryTradeInfo());
 //		return "/donate";
