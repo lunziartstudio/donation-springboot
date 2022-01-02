@@ -79,7 +79,7 @@ public class SuccessController {
 				String merchantTradeNo = requstBody.get("CustomField1").split(",")[1];
 				Donation donation = new Donation();
 				donation.set_id(new ObjectId());
-				donation.setMerchantTradeNo(merchantTradeNo);
+				donation.setMerchant_trade_no(merchantTradeNo);
 				donation.setPayment_method(requstBody.get("CustomField2"));
 				donation.setAmount(Integer.valueOf(requstBody.get("CustomField3")));
 				String donator = requstBody.get("CustomField4").split(",")[0];
