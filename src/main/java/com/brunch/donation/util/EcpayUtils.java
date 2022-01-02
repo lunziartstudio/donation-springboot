@@ -90,7 +90,7 @@ public class  EcpayUtils{
 	public static boolean cmprChkMacValue(Config config) {
 		Hashtable<String, String> dict = new Hashtable<String, String>();
 		dict.put("MerchantID", config.getMerchantId());
-		dict.put("CheckMacValue", config.getReturnURL());
+		dict.put("CheckMacValue", config.getCheckMacValue());
 		return all.compareCheckMacValue(dict);
 	}
 
