@@ -62,7 +62,7 @@ public class  EcpayUtils{
 		// 查詢自訂的交易編號
 		System.out.println("queryTradeInfo: " + postQueryTradeInfo());
 
-//	System.out.println("compare CheckMacValue method testing result: " + cmprChkMacValue());
+	System.out.println("compare CheckMacValue method testing result: " + cmprChkMacValue());
 //	System.out.println("apple pay create order: " + postCreateServerOrder());
 //	System.out.println("doAction: " + postDoAction());
 //	System.out.println("queryTradeInfo: " + postQueryTradeInfo());
@@ -87,10 +87,10 @@ public class  EcpayUtils{
 //	System.out.println("aioCheckOutBARCODE: " + genAioCheckOutBARCODE()); // 產生超商條碼繳費訂單物件
 	}
 
-	public static boolean cmprChkMacValue() {
+	public static boolean cmprChkMacValue(Config config) {
 		Hashtable<String, String> dict = new Hashtable<String, String>();
-		dict.put("MerchantID", "2000132");
-		dict.put("CheckMacValue", "50BE3989953C1734E32DD18EB23698241E035F9CBCAC74371CCCF09E0E15BD61");
+		dict.put("MerchantID", config.getMerchantId());
+		dict.put("CheckMacValue", config.getReturnURL());
 		return all.compareCheckMacValue(dict);
 	}
 

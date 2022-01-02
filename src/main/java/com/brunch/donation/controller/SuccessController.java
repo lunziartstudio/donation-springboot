@@ -15,14 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.w3c.dom.Document;
 
+import com.brunch.donation.config.Config;
 import com.brunch.donation.model.Donation;
 import com.brunch.donation.model.Streamer;
 import com.brunch.donation.repository.StreamerRepository;
+import com.brunch.donation.util.EcpayUtils;
 
 import ecpay.payment.integration.ecpayOperator.EcpayFunction;
 
 @RestController
 public class SuccessController {
+
+	@Autowired
+	private Config config;
+
+	@Autowired
+	EcpayUtils ecpayUtils;
 
 	@GetMapping("/receive")
 	public ModelAndView success() {
@@ -33,8 +41,10 @@ public class SuccessController {
 
 	@PostMapping("/receive")
 	public String receive() {
+		EcpayUtils.initial();
 		System.out.println("POST recieve");
-		return "1|OK";
+		// ecpay規定交易成功須回傳"1|OK"
+		return (EcpayUtils.cmprChkMacValue(config)) ? "1|OK" : "0|ERROR|";
 	}
 
 	@GetMapping("/test")
