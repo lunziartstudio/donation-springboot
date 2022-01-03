@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/main.css" rel="stylesheet">
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/app.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+#img1 {
+	width: 400px;
+	height: 400px;
+	background-color: red;
+}
+</style>
+</head>
+
+<body>
+	<div id="img1" style="display: none">test&nbsp;</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table id="conversation" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Greetings</th>
+					</tr>
+				</thead>
+				<tbody id="greetings">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script>
+		$("#img1").fadeIn(2500);
+
+		function myFunc() {
+			setTimeout(function() {
+				// document.getElementById("img1").style.display = "none";
+				$("#img1").fadeOut(2500);
+			}, 3000);
+		}
+		myFunc();
+	</script>
+</body>
+
+</html>

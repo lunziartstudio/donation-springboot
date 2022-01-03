@@ -1,17 +1,33 @@
 package com.brunch.donation.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.brunch.donation.config.Config;
@@ -32,15 +48,46 @@ public class SuccessController {
 	@Autowired
 	StreamerRepository streamerRepo;
 
+	@Autowired
+	private HttpServletResponse httpServletResponse ;
+	
+
 	@GetMapping("/receive")
 	public ModelAndView success() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("receive.html");
 		return mv;
 	}
-
-	public static void main(String[] args) {
-
+	
+	@GetMapping("/alert")
+	public ModelAndView alert () {
+	    ModelAndView modelAndView = new ModelAndView();
+	    modelAndView.setViewName("alert.html");
+	    return modelAndView;
+	}
+	
+	@GetMapping("/act")
+	public String act () {
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+		httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+		httpServletResponse.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token, X-Csrf-Token, WWW-Authenticate, Authorization");
+		httpServletResponse.setHeader("Access-Control-Allow-Credentials", "false");
+		httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+	    return "{test: 123}";
+	}
+	
+	@GetMapping("/jstest")
+	public ModelAndView jstest () {
+	    ModelAndView modelAndView = new ModelAndView();
+	    modelAndView.setViewName("jstest.html");
+	    return modelAndView;
+	}
+	
+	@GetMapping("/is-there-new-donation")
+	public String isThereNewDonation() {
+	    // query is there new donation
+		// if there has. delete db data then return
+	    return "true";
 	}
 
 	@PostMapping("/getTest")
