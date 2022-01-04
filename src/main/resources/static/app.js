@@ -39,14 +39,10 @@ function disconnect() {
 	console.log("Disconnected");
 }
 
-function sendName(name) {
-	//	setInterval(function() {
-	//		stompClient.send("/app/hello", {}, JSON.stringify(name));
-	//	}, 1000);
-
+function sendRequest(name) {
 	// logic 
 	setInterval(function() {
-		fetch('http://localhost:8080/is-there-new-donation')
+		fetch('http://localhost:8080/is-there-a-new-donation')
 			.then(function(response) {
 				return response.json();
 			})

@@ -25,6 +25,4 @@ public class GreetingController {
 		return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
 	}
 	
-	
-
 }

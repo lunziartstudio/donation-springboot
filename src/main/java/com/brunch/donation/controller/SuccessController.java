@@ -32,7 +32,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.brunch.donation.config.Config;
 import com.brunch.donation.model.Donation;
+import com.brunch.donation.model.DonationPopUp;
 import com.brunch.donation.model.Streamer;
+import com.brunch.donation.repository.DonationPopUpRepository;
 import com.brunch.donation.repository.StreamerRepository;
 import com.brunch.donation.util.EcpayUtils;
 
@@ -49,8 +51,10 @@ public class SuccessController {
 	StreamerRepository streamerRepo;
 
 	@Autowired
-	private HttpServletResponse httpServletResponse ;
-	
+	DonationPopUpRepository donationPopUpRepo;
+
+	@Autowired
+	private HttpServletResponse httpServletResponse;
 
 	@GetMapping("/receive")
 	public ModelAndView success() {
@@ -58,36 +62,65 @@ public class SuccessController {
 		mv.setViewName("receive.html");
 		return mv;
 	}
-	
+
 	@GetMapping("/alert")
-	public ModelAndView alert () {
-	    ModelAndView modelAndView = new ModelAndView();
-	    modelAndView.setViewName("alert.html");
-	    return modelAndView;
+	public ModelAndView alert() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("alert.html");
+		return modelAndView;
 	}
-	
+
 	@GetMapping("/act")
-	public String act () {
+	public String act() {
 		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
 		httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-		httpServletResponse.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token, X-Csrf-Token, WWW-Authenticate, Authorization");
+		httpServletResponse.setHeader("Access-Control-Allow-Headers",
+				"Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token, X-Csrf-Token, WWW-Authenticate, Authorization");
 		httpServletResponse.setHeader("Access-Control-Allow-Credentials", "false");
 		httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-	    return "{test: 123}";
+		return "{test: 123}";
 	}
-	
+
 	@GetMapping("/jstest")
-	public ModelAndView jstest () {
-	    ModelAndView modelAndView = new ModelAndView();
-	    modelAndView.setViewName("jstest.html");
-	    return modelAndView;
+	public ModelAndView jstest() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("jstest.html");
+		return mv;
 	}
-	
-	@GetMapping("/is-there-new-donation")
+
+	@GetMapping("/is-there-a-new-donation")
 	public String isThereNewDonation() {
-	    // query is there new donation
-		// if there has. delete db data then return
-	    return "true";
+		// Query is there a new donation.
+		boolean isDone = false;
+		List<DonationPopUp> donationList = donationPopUpRepo.findAll();
+		log.info("" +donationList);
+		DonationPopUp toBeDeletedDonationPopUp = null;
+		int size = donationList.size();
+		log.info("" +size);
+		try {
+			// If there has donation. Delete that from DB and return true;
+			if (size > 0) {
+				toBeDeletedDonationPopUp = donationList.get(0);
+				deleteDonation(toBeDeletedDonationPopUp);
+				isDone = true;
+			}
+		} catch (Exception e) {
+			log.error("Delete donation pop up failed. Donation pop up id = [" + toBeDeletedDonationPopUp.get_id() +"]");
+			isDone = false;
+		}
+		log.info("" +isDone);
+		return (size > 0 && isDone == true) ? "true" : "false";
+	}
+
+	public void deleteDonation(DonationPopUp donationPopUp) {
+		donationPopUpRepo.delete(donationPopUp);
+	}
+
+	@GetMapping("/websocket")
+	public ModelAndView websocket() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("websocket.html");
+		return mv;
 	}
 
 	@PostMapping("/getTest")
