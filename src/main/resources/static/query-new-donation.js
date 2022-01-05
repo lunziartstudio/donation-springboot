@@ -43,8 +43,8 @@ function sendRequest(name) {
 			if (json == true) {
 				console.log("thereIsANewDonation");
 				let image = '<img src="./image/doge.jpg"; display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
-				// let text = `<p id="donation-text">感謝</p>`;
-				let text = `<p id="donation-text" style="padding-left: 100px; padding-right: 100px; -webkit-text-stroke: 0.5px black; color: white; margin-top:5px; font-size: 30px;">感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內</p>`;
+				let text = `<p id="donation-text" style=" text-align: center; padding-left: 100px; padding-right: 100px; -webkit-text-stroke: 0.5px black; color: white; margin-top:15px; font-size: 30px;">測試123</p>`;
+				// let text = `<p id="donation-text" style=" text-align: center; padding-left: 100px; padding-right: 100px; -webkit-text-stroke: 0.5px black; color: white; margin-top:5px; font-size: 30px;">感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內</p>`;
 				refresh(image + text);
 			}
 		});
