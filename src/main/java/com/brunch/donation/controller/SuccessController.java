@@ -80,11 +80,11 @@ public class SuccessController {
 		httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
 		return "{test: 123}";
 	}
-
-	@GetMapping("/jstest")
-	public ModelAndView jstest() {
+	
+	@GetMapping("/donation-pop-up")
+	public ModelAndView websocket() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("jstest.html");
+		mv.setViewName("donation-pop-up.html");
 		return mv;
 	}
 
@@ -114,13 +114,6 @@ public class SuccessController {
 
 	public void deleteDonation(DonationPopUp donationPopUp) {
 		donationPopUpRepo.delete(donationPopUp);
-	}
-
-	@GetMapping("/websocket")
-	public ModelAndView websocket() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("websocket.html");
-		return mv;
 	}
 
 	@PostMapping("/getTest")
