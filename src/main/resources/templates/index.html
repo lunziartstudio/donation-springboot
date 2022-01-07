@@ -48,8 +48,11 @@
 			        contentType: 'application/json',
 			        success: function(data)
 			        {
-			        	window.location.href = "test";
-			        }
+			        	window.location.href = "data";
+			        },
+			    	error: function(data) {
+			    		console.log(data);
+			    	}
 			    });
 			    
 			});
@@ -71,13 +74,13 @@
 					</li>
 
 					<li class="select" tabindex="1">
-                        <input class="selectopt" name="target" value="opt0" type="radio" id="opt0" checked="checked" onclick="changeMode()"> 
+                        <input class="selectopt" name="target" value="Elinora" type="radio" id="opt0" checked="checked" onclick="changeMode()"> 
                             <label for="opt0" class="option">愛琳諾菈/ LLT5 藝輪點燈</label>
-                        <input class="selectopt" name="target" value="opt1" type="radio" id="opt1" onclick="changeMode()"> 
+                        <input class="selectopt" name="target" value="ChristinHunt" type="radio" id="opt1" onclick="changeMode()"> 
                              <label for="opt1" class="option">克里絲汀 CH. / 獵人克希Chrissy</label> 
-                        <input class="selectopt" name="target" value="opt2" type="radio" id="opt2" onclick="changeMode()"> 
+                        <input class="selectopt" name="target" value="ChivesWang" type="radio" id="opt2" onclick="changeMode()"> 
                             <label for="opt2" class="option">王顧採	CH. / 六埕順揚宮主委</label> 
-                        <input class="selectopt" name="target" value="opt3" type="radio" id="opt3" onclick="changeMode()">
+                        <input class="selectopt" name="target" value="Purin" type="radio" id="opt3" onclick="changeMode()">
                             <label for="opt3" class="option">蜂蜜布丁 CH. / 83Purin</label>
                     </li>
 
@@ -103,13 +106,13 @@
 						<div>付款方式</div>
 					</li>
 					<li class="select" tabindex="1"><input class="selectopt"
-						name="payment_method" value="A1" type="radio" id="A1" checked="checked">
+						name="payment_method" value="credit_card" type="radio" id="A1" checked="checked">
 						<label for="A1" class="option">信用卡</label> <input
-						class="selectopt" name="payment_method" value="A2" type="radio" id="A2">
+						class="selectopt" name="payment_method" value="cvs_barcode" type="radio" id="A2">
 						<label for="A2" class="option">超商代碼</label> <input
-						class="selectopt" name="payment_method" value="A3" type="radio" id="A3">
+						class="selectopt" name="payment_method" value="ATM" type="radio" id="A3">
 						<label for="A3" class="option">ATM轉帳</label> <input
-						class="selectopt" name="payment_method" value="A3" type="radio" id="A3">
+						class="selectopt" name="payment_method" value="webATM" type="radio" id="A3">
 						<label for="A3" class="option">網路ATM</label></li>
 
 				</ul>
