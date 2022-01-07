@@ -32,15 +32,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.brunch.donation.config.Config;
 import com.brunch.donation.model.Donation;
-import com.brunch.donation.model.DonationPopUp;
 import com.brunch.donation.model.Streamer;
-import com.brunch.donation.repository.DonationPopUpRepository;
 import com.brunch.donation.repository.StreamerRepository;
 import com.brunch.donation.util.EcpayUtils;
 
 @RestController
-public class SuccessController {
-	private static final Logger log = LoggerFactory.getLogger(SuccessController.class);
+public class ReceiveController {
+	private static final Logger log = LoggerFactory.getLogger(ReceiveController.class);
 	@Autowired
 	private Config config;
 
@@ -49,92 +47,6 @@ public class SuccessController {
 
 	@Autowired
 	StreamerRepository streamerRepo;
-
-	@Autowired
-	DonationPopUpRepository donationPopUpRepo;
-
-	@Autowired
-	private HttpServletResponse httpServletResponse;
-
-	@GetMapping("/receive")
-	public ModelAndView success() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("receive.html");
-		return mv;
-	}
-
-	@GetMapping("/alert")
-	public ModelAndView alert() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("alert.html");
-		return modelAndView;
-	}
-
-	@GetMapping("/act")
-	public String act() {
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-		httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-		httpServletResponse.setHeader("Access-Control-Allow-Headers",
-				"Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token, X-Csrf-Token, WWW-Authenticate, Authorization");
-		httpServletResponse.setHeader("Access-Control-Allow-Credentials", "false");
-		httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-		return "{test: 123}";
-	}
-	
-	@GetMapping("/donation-pop-up")
-	public ModelAndView websocket() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("donation-pop-up.html");
-		return mv;
-	}
-
-	@GetMapping("/is-there-a-new-donation")
-	public String isThereNewDonation() {
-		// Query is there a new donation.
-		boolean isDone = false;
-		List<DonationPopUp> donationList = donationPopUpRepo.findAll();
-		log.info("" +donationList);
-		DonationPopUp toBeDeletedDonationPopUp = null;
-		int size = donationList.size();
-		log.info("" +size);
-		try {
-			// If there has donation. Delete that from DB and return true;
-			if (size > 0) {
-				toBeDeletedDonationPopUp = donationList.get(0);
-				deleteDonation(toBeDeletedDonationPopUp);
-				isDone = true;
-			}
-		} catch (Exception e) {
-			log.error("Delete donation pop up failed. Donation pop up id = [" + toBeDeletedDonationPopUp.get_id() +"]");
-			isDone = false;
-		}
-		log.info("" +isDone);
-		return (size > 0 && isDone == true) ? "true" : "false";
-	}
-
-	public void deleteDonation(DonationPopUp donationPopUp) {
-		donationPopUpRepo.delete(donationPopUp);
-	}
-
-	@PostMapping("/getTest")
-	public void test() {
-		String name = "streamer01";
-		Donation donation = new Donation();
-		donation.set_id(new ObjectId());
-		donation.setPayment_method("credit_cared69");
-		donation.setAmount(7414);
-		donation.setMessage("hello ooooooo");
-		// MongoDB 需要轉換+8小時
-		Calendar ca = Calendar.getInstance();
-		ca.setTime(new Date());
-		ca.add(Calendar.HOUR_OF_DAY, 8);
-		donation.setCreate_time(ca.getTime());
-		donation.setModify_time(ca.getTime());
-		Streamer streamer = streamerRepo.findStreamerByName(name);
-		List<Donation> donationList = streamer.getDonation();
-		donationList.add(donation);
-		streamerRepo.save(streamer);
-	}
 
 	@PostMapping("/receive")
 	public String receive(@RequestParam Map<String, String> requstBody) {
@@ -177,4 +89,31 @@ public class SuccessController {
 		log.info("isSuccess = [" + isSuccess + "]");
 		return isSuccess ? "1|OK" : "0|ERROR|";
 	}
+
+	@GetMapping("/alert")
+	public ModelAndView alert() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("alert.html");
+		return modelAndView;
+	}
+	
+//	@PostMapping("/getTest")
+//	public void test() {
+//		String name = "streamer01";
+//		Donation donation = new Donation();
+//		donation.set_id(new ObjectId());
+//		donation.setPayment_method("credit_cared69");
+//		donation.setAmount(7414);
+//		donation.setMessage("hello ooooooo");
+//		// MongoDB 需要轉換+8小時
+//		Calendar ca = Calendar.getInstance();
+//		ca.setTime(new Date());
+//		ca.add(Calendar.HOUR_OF_DAY, 8);
+//		donation.setCreate_time(ca.getTime());
+//		donation.setModify_time(ca.getTime());
+//		Streamer streamer = streamerRepo.findStreamerByName(name);
+//		List<Donation> donationList = streamer.getDonation();
+//		donationList.add(donation);
+//		streamerRepo.save(streamer);
+//	}
 }

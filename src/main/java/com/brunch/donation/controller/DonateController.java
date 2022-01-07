@@ -2,6 +2,8 @@ package com.brunch.donation.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,8 @@ import com.brunch.donation.util.EcpayUtils;
 
 @RestController
 public class DonateController {
+	private static final Logger log = LoggerFactory.getLogger(DonateController.class);
+	
 	@Autowired
 	StreamerRepository streamerRepo;
 
@@ -26,17 +30,17 @@ public class DonateController {
 	@Autowired
 	EcpayUtils ecpayUtils;
 	
-	
-//	@GetMapping("/donate/{payment_method}")
 	@PostMapping("/donate")
 	public String donation(@RequestBody DonationForm donationForm) {
-//	public String donation(@PathVariable String payment_method) {
-//		getDonationFormDetail(donationForm);
-//		DonationForm donationForm = null;
+		getDonationFormDetail(donationForm);
+		if (Integer.parseInt(donationForm.getAmount()) < 0) {
+			log.error("amount < 0");
+			return "Error! Please try again later.";
+		}
 		// init ecpay
 		EcpayUtils.initial();
 		String htmlPage = "";
-//		switch(payment_method) {
+		
 		switch(donationForm.getPayment_method()) {
 			case "credit_card":
 				htmlPage = EcpayUtils.genAioCheckOutOneTime(config, donationForm);
@@ -57,7 +61,7 @@ public class DonateController {
 		}
 		return htmlPage;
 		
-		// QUERY ORDER
+		// Query order
 //		System.out.println("queryTradeInfo: " + EcpayUtils.postQueryTradeInfo());
 //		return "/donate";
 	}
@@ -65,11 +69,11 @@ public class DonateController {
 	
 
 	public void getDonationFormDetail(DonationForm donationForm) {
-		System.out.println(donationForm.getName());
-		System.out.println(donationForm.getPayment_method());
-		System.out.println(donationForm.getAmount());
-		System.out.println(donationForm.getMessage());
-		System.out.println(donationForm.getTarget());
+		log.info(donationForm.getName());
+		log.info(donationForm.getPayment_method());
+		log.info(donationForm.getAmount());
+		log.info(donationForm.getMessage());
+		log.info(donationForm.getTarget());
 
 	}
 

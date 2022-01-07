@@ -34,18 +34,23 @@ function connect(name, callback) {
 }
 */
 
-function sendRequest(name) {
-	fetch('http://localhost:8080/is-there-a-new-donation')
+function sendRequest(streamer) {
+	fetch('http://localhost:8080/is-there-a-new-donation?streamer=' + streamer)
 		.then(function(response) {
-			return response.json();
+			if (response.status == 200) {
+				return response.json();
+			}
+			else {
+				return null;
+			}
 		})
 		.then(function(json) {
-			if (json == true) {
-				console.log("thereIsANewDonation");
+			if (json != null) {
+				// console.log(json);
 				let image = '<img src="./image/doge.jpg"; display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
-				let text = `<p id="donation-text" style=" text-align: center; padding-left: 100px; padding-right: 100px; -webkit-text-stroke: 0.5px black; color: white; margin-top:15px; font-size: 30px;">測試123</p>`;
-				// let text = `<p id="donation-text" style=" text-align: center; padding-left: 100px; padding-right: 100px; -webkit-text-stroke: 0.5px black; color: white; margin-top:5px; font-size: 30px;">感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內感謝斗內</p>`;
-				refresh(image + text);
+				let nameAndAmount = `<p id="donation-text" style="margin: 15px 0 0 0; text-align: center; -webkit-text-stroke: 0.5px black; color: white;font-size: 30px;">感謝 ${json.name} 贊助的 ${json.amount} 元!</p>`;
+				let message = `<p id="donation-text" style=" text-align: center; padding-left: 100px; padding-right: 100px; -webkit-text-stroke: 0.5px black; color: white; margin-top: 0px; font-size: 30px;">${json.message}</p>`;
+				refresh(image + nameAndAmount + message);
 			}
 		});
 }
@@ -55,6 +60,6 @@ function refresh(content) {
 	$("#donation").each(function() {
 		$(this).hide();
 		$(this).delay(1250).fadeIn(1000).delay(7000).fadeOut(1250);
-	});	
+	});
 }
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>donation-pop-up</title>
+	 <meta charset="utf-8">
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<script src="/query-new-donation.js"></script>
+	<style>
+		body{
+		  font-family: " Open Sans ";
+		  font-weight: 800;
+		}
+	</style>
+</head>
+<body>
+	<script> 
+		//connect(json, sendRequest);
+	  	(function send() {
+            // do some stuff
+            sendRequest();
+            setTimeout(send, 15000);
+        })();
+	</script>
+	<div id="donation">
+		<div id="donation-content"></div>
+	</div>
+	
+</body>
+</html>

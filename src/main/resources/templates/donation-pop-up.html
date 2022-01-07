@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>donation-pop-up</title>
 	 <meta charset="utf-8">
@@ -15,12 +15,13 @@
 	</style>
 </head>
 <body>
-	<script>
-		let json = {"name":"Francis"}; 
+	<script th:inline="javascript">
 		//connect(json, sendRequest);
+		var streamer = /*[[${name}]]*/ 'default';
+    	
 	  	(function send() {
             // do some stuff
-            sendRequest();
+            sendRequest(streamer);
             setTimeout(send, 15000);
         })();
 	</script>

@@ -1,9 +1,14 @@
-package com.brunch.donation.model;
+package com.brunch.donation.model.donationpopup;
+
+import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class DonationPopUp {
+@Document("ChristinHunt-donation-pop-up")
+public class ChristinHuntDonationPopUp implements IDonationPopUp{
+	@Id
 	private ObjectId _id;
 	private String name;
 	private int amount;
@@ -40,4 +45,5 @@ public class DonationPopUp {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 }
