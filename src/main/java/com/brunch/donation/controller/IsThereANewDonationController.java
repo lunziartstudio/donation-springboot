@@ -65,19 +65,19 @@ public class IsThereANewDonationController {
 		
 		switch (streamer) {
 			case "ChivesWang":
-				chivesWangDonationList = chivesWangDonationPopUpRepo.findAll();
+				chivesWangDonationList = chivesWangDonationPopUpRepo.findChivesWangDonationPopUpByFlag(0);
 				size = chivesWangDonationList.size();
 				break;
 			case "ChristinHunt":
-				christinHuntDonationPopUpList = christinHuntDonationPopUpRepo.findAll();
+				christinHuntDonationPopUpList = christinHuntDonationPopUpRepo.findChristinHuntDonationPopUpByFlag(0);
 				size = christinHuntDonationPopUpList.size();
 				break;
 			case "Elinora":
-				elinoraDonationPopUpList = elinoraDonationPopUpRepo.findAll();
+				elinoraDonationPopUpList = elinoraDonationPopUpRepo.findElinoraDonationPopUpByFlag(0);
 				size = elinoraDonationPopUpList.size();
 				break;
 			case "Purin":
-				purinDonationPopUpList = purinDonationPopUpRepo.findAll();
+				purinDonationPopUpList = purinDonationPopUpRepo.findPurinDonationPopUpByFlag(0);
 				size = purinDonationPopUpList.size();
 				break;
 			default:
