@@ -283,7 +283,6 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setRedeem("Y");
 		obj.setCustomField1(target);
 		String form = all.aioCheckOut(obj, null);
 		return form;
