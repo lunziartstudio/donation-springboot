@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>贊助</title>
 	<link th:href="@{/css/text.css}" rel="stylesheet" />
 	<link th:href="@{/css/styles.css}" rel="stylesheet" />
-	
 </head>
 <body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -32,31 +32,6 @@
 		if (screen.width <= 450) {
 			document.location = "/mobile";
 		}
-		function submitForm(){
-			$("#donation-form").submit(function(e) {
-	
-			    e.preventDefault(); // avoid to execute the actual submit of the form.
-	
-			    var form = $(this);
-			    var actionUrl = form.attr('action');
-			    
-			    $.ajax({
-			        type: "POST",
-			        url: actionUrl,
-			        data: form.serialize(), // serializes the form's elements.
-			        dataType: "json",
-			        contentType: 'application/json',
-			        success: function(data)
-			        {
-			        	window.location.href = "data";
-			        },
-			    	error: function(data) {
-			    		console.log(data);
-			    	}
-			    });
-			    
-			});
-		}
 	</script>
 
 	<div id="header">
@@ -64,7 +39,7 @@
 
 	</div>
 	<div id="nav">
-		<form id="donation-form" action="/donate">
+		<form id="donation-form" action="/donate" method="POST">
 			<div class="flex-container">
 
 				<ul>
@@ -94,6 +69,7 @@
 							name="amount"
 							type="number" class="field__input" placeholder="...請輸入整數金額，最少35元"
 							required="required" oninvalid="this.setCustomValidity('最少35')"
+							onchange="setCustomValidity('')"
 							min="35" autocomplete="off"> <span
 							class="field__label-wrap"> <span class="field__label">
 							</span>
@@ -113,8 +89,8 @@
 						class="selectopt" name="payment_method" value="ATM" type="radio" id="A3">
 						<label for="A3" class="option">ATM轉帳</label> <input
 						class="selectopt" name="payment_method" value="webATM" type="radio" id="A3">
-						<label for="A3" class="option">網路ATM</label></li>
-
+						<label for="A3" class="option">網路ATM</label>
+					</li>
 				</ul>
 				<ul>
 					<li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+	<title>贊助</title>
 	<link th:href="@{/css/mobile/text.css}" rel="stylesheet" />
 	<link th:href="@{/css/mobile/styles.css}" rel="stylesheet" />
 
@@ -34,18 +34,13 @@
 		if (screen.width > 450) {
 			document.location = "/index";
 		}
-		
-		$(document).ready(function(){
-		  console.log(($("#donation-form")).submit());
-		  
-		});
 	</script>
 	<div id="header">
 		<h1 id="img1">n</h1>
 
 	</div>
 	<div id="nav">
-		<form id="donation-form" action="">
+		<form id="donation-form" action="/donate" method="POST">
 
 			<ul>
 
@@ -53,18 +48,16 @@
 					<div>贊助對象</div>
 				</li>
 
-				<li class="select" tabindex="1"><input class="selectopt"
-					name="test" value="opt0" type="radio" id="opt0" checked="checked"
-					onclick="changeMode()"> <label for="opt0" class="option">愛琳諾菈
-						/ LLT5 藝輪點燈</label> <input class="selectopt" name="test" value="opt1"
-					type="radio" id="opt1" onclick="changeMode()"> <label
-					for="opt1" class="option">克里絲汀 CH. / 獵人克希Chrissy</label> <input
-					class="selectopt" name="test" value="opt2" type="radio" id="opt2"
-					onclick="changeMode()"> <label for="opt2" class="option">王顧採
-						CH. / 六埕順揚宮主委</label> <input class="selectopt" name="test" value="opt3"
-					type="radio" id="opt3" onclick="changeMode()"> <label
-					for="opt3" class="option">蜂蜜布丁 CH. / 83Purin</label></li>
-
+                <li class="select" tabindex="1">
+                    <input class="selectopt" name="target" value="Elinora" type="radio" id="opt0" checked="checked" onclick="changeMode()">
+                    <label for="opt0" class="option">愛琳諾菈 / LLT5 藝輪點燈</label>
+                    <input class="selectopt" name="target" value="ChristinHunt" type="radio" id="opt1" onclick="changeMode()">
+                    <label for="opt1" class="option">克里絲汀 CH. / 獵人克希Chrissy</label>
+                    <input class="selectopt" name="target" value="ChivesWang" type="radio" id="opt2" onclick="changeMode()">
+                    <label for="opt2" class="option">王顧採 CH. / 六埕順揚宮主委</label>
+                    <input class="selectopt" name="target" value="Purin" type="radio" id="opt3" onclick="changeMode()">
+                    <label for="opt3" class="option">蜂蜜布丁 CH. / 83Purin</label>
+                </li>
 
 			</ul>
 			<ul>
@@ -72,8 +65,10 @@
 					<div>贊助金額（新台幣TWD）</div>
 				</li>
 				<li><label class="field field_v2"> <input id="money"
+						name="amount"
 						type="number" class="field__input" placeholder="...請輸入整數金額，最少35元"
 						required="required" oninvalid="this.setCustomValidity('最少35')"
+						onchange="setCustomValidity('')"
 						min="35" autocomplete="off"> <span
 						class="field__label-wrap"> <span class="field__label">
 						</span>
@@ -85,15 +80,15 @@
 				<li>
 					<div>付款方式</div>
 				</li>
-				<li class="select" tabindex="1"><input class="selectopt"
-					name="pay" value="A1" type="radio" id="A1" checked="checked">
-					<label for="A1" class="option">信用卡</label> <input class="selectopt"
-					name="pay" value="A2" type="radio" id="A2"> <label for="A2"
-					class="option">超商代碼</label> <input class="selectopt" name="pay"
-					value="A3" type="radio" id="A3"> <label for="A3"
-					class="option">ATM轉帳</label> <input class="selectopt" name="pay"
-					value="A3" type="radio" id="A3"> <label for="A3"
-					class="option">網路ATM</label></li>
+				<li class="select" tabindex="1"><input 
+					class="selectopt" name="payment_method" value="credit_card" type="radio" id="A1" checked="checked">
+					<label for="A1" class="option">信用卡</label> <input 
+					class="selectopt" name="payment_method" value="cvs_barcode" type="radio" id="A2">
+					<label for="A2" class="option">超商代碼</label> <input
+					class="selectopt" name="payment_method" value="ATM" type="radio" id="A3"> 
+					<label for="A3" class="option">ATM轉帳</label> <input 
+					class="selectopt" name="payment_method" value="webATM" type="radio" id="A3"> 
+					<label for="A3" class="option">網路ATM</label></li>
 
 			</ul>
 			<ul>
@@ -130,7 +125,7 @@
 						<h2 id="candle"></h2>
 					</li>
 					<li class="container2_li">
-						<button class="buttonTest" type="submit"></button>
+						<button class="buttonTest" type="submit" onclick="submitForm()"></button>
 					</li>
 					<li>
 						<div id="content">

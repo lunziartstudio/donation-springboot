@@ -33,6 +33,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.brunch.donation.config.Config;
 import com.brunch.donation.model.Donation;
 import com.brunch.donation.model.Streamer;
+import com.brunch.donation.model.donationpopup.ChivesWangDonationPopUp;
+import com.brunch.donation.model.donationpopup.ChristinHuntDonationPopUp;
+import com.brunch.donation.model.donationpopup.ElinoraDonationPopUp;
+import com.brunch.donation.model.donationpopup.PurinDonationPopUp;
+import com.brunch.donation.repository.ChivesWangDonationPopUpRepository;
+import com.brunch.donation.repository.ChristinHuntDonationPopUpRepository;
+import com.brunch.donation.repository.ElinoraDonationPopUpRepository;
+import com.brunch.donation.repository.PurinDonationPopUpRepository;
 import com.brunch.donation.repository.StreamerRepository;
 import com.brunch.donation.util.EcpayUtils;
 
@@ -47,6 +55,18 @@ public class ReceiveController {
 
 	@Autowired
 	StreamerRepository streamerRepo;
+	
+	@Autowired
+	ChivesWangDonationPopUpRepository chivesWangDonationPopUpRepo;
+
+	@Autowired
+	ChristinHuntDonationPopUpRepository christinHuntDonationPopUpRepo;
+
+	@Autowired
+	ElinoraDonationPopUpRepository elinoraDonationPopUpRepo;
+	
+	@Autowired
+	PurinDonationPopUpRepository purinDonationPopUpRepo;
 
 	@PostMapping("/receive")
 	public String receive(@RequestParam Map<String, String> requstBody) {
@@ -54,11 +74,13 @@ public class ReceiveController {
 		// 9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE
 		// ecpay規定交易成功須回傳"1|OK"
 		boolean isSuccess = false;
+		log.info("received");
 		// 驗證檢查碼
 		Hashtable<String, String> dict = new Hashtable<String, String>();
 		dict.putAll(requstBody);
 
 		if (EcpayUtils.cmprChkMacValue(config, dict)) {
+			// Insert into "streamer" table.
 			try {
 				String target = requstBody.get("CustomField1").split(",")[0];
 				String merchantTradeNo = requstBody.get("CustomField1").split(",")[1];
@@ -82,6 +104,40 @@ public class ReceiveController {
 				donationList.add(donation);
 				streamerRepo.save(streamer);
 				isSuccess = true;
+				
+				// Insert into "Name-donation-pop-up" table.
+				switch (target) {
+					case "ChivesWang":
+						ChivesWangDonationPopUp chivesWangDonationPopUp = new ChivesWangDonationPopUp();
+						chivesWangDonationPopUp.setName(donation.getName());
+						chivesWangDonationPopUp.setAmount(donation.getAmount());
+						chivesWangDonationPopUp.setMessage(donation.getMessage());
+						chivesWangDonationPopUpRepo.save(chivesWangDonationPopUp);
+						break;
+					case "ChristinHunt":
+						ChristinHuntDonationPopUp christinHuntDonationPopUp = new ChristinHuntDonationPopUp();
+						christinHuntDonationPopUp.setName(donation.getName());
+						christinHuntDonationPopUp.setAmount(donation.getAmount());
+						christinHuntDonationPopUp.setMessage(donation.getMessage());
+						christinHuntDonationPopUpRepo.save(christinHuntDonationPopUp);
+						break;
+					case "Elinora":
+						ElinoraDonationPopUp elinoraDonationPopUp = new ElinoraDonationPopUp();
+						elinoraDonationPopUp.setName(donation.getName());
+						elinoraDonationPopUp.setAmount(donation.getAmount());
+						elinoraDonationPopUp.setMessage(donation.getMessage());
+						elinoraDonationPopUpRepo.save(elinoraDonationPopUp);
+						break;
+					case "Purin":
+						PurinDonationPopUp purinDonationPopUp = new PurinDonationPopUp();
+						purinDonationPopUp.setName(donation.getName());
+						purinDonationPopUp.setAmount(donation.getAmount());
+						purinDonationPopUp.setMessage(donation.getMessage());
+						purinDonationPopUpRepo.save(purinDonationPopUp);
+						break;
+					default:
+						break;
+				}
 			} catch (Exception e) {
 				log.error("Insert donation fail, requestBody = ");
 			}
@@ -96,6 +152,7 @@ public class ReceiveController {
 		modelAndView.setViewName("alert.html");
 		return modelAndView;
 	}
+	
 	
 //	@PostMapping("/getTest")
 //	public void test() {
