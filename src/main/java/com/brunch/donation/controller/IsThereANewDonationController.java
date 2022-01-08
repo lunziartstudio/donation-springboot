@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class IsThereANewDonationController {
 		DonationPopUp donationPopUp = new DonationPopUp();
 		boolean isDone = false;
 		int size = 0;
-		log.info(streamer);
+
 		switch (streamer) {
 			case "ChivesWang":
 				chivesWangDonationList = chivesWangDonationPopUpRepo.findChivesWangDonationPopUpByFlag(1);
@@ -104,7 +105,6 @@ public class IsThereANewDonationController {
 						donationPopUp = convertBean(christinHuntDonationPopUp);
 						break;
 					case "Elinora":
-						log.info("Elinora");
 						elinoraDonationPopUp = elinoraDonationPopUpList.get(0);
 						elinoraDonationPopUpRepo.delete(elinoraDonationPopUp);
 						donationPopUp = convertBean(elinoraDonationPopUp);
@@ -118,13 +118,13 @@ public class IsThereANewDonationController {
 						break;
 				}
 				isDone = true;
+//				log.info("Delete merchant_trade_no [" + purinDonationPopUp.getMerchant_trade_no() + "] success");
 			}
 		} catch (Exception e) {
 			log.error(
-					"Delete donation pop up failed. Donation pop up id = [" + donationPopUp.get_id() + "]");
+					"Delete donation pop up failed. Donation pop up id = [" + donationPopUp.get_id() + "]", e);
 			isDone = false;
 		}
-		log.info("size = " + size);
 	
 		return (size > 0 && isDone == true) ? donationPopUp : null;
 	}

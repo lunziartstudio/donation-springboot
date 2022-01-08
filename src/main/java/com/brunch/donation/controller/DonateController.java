@@ -32,7 +32,6 @@ import com.brunch.donation.util.OrderNoUtils;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
-
 @RestController
 public class DonateController {
 	private static final Logger log = LoggerFactory.getLogger(DonateController.class);
@@ -45,7 +44,7 @@ public class DonateController {
 
 	@Autowired
 	EcpayUtils ecpayUtils;
-	
+
 	@Autowired
 	ChivesWangDonationPopUpRepository chivesWangDonationPopUpRepo;
 
@@ -54,10 +53,9 @@ public class DonateController {
 
 	@Autowired
 	ElinoraDonationPopUpRepository elinoraDonationPopUpRepo;
-	
+
 	@Autowired
 	PurinDonationPopUpRepository purinDonationPopUpRepo;
-	
 
 	@PostMapping("/donate")
 	public String donation(@RequestBody String paramStr) throws UnsupportedEncodingException {
@@ -72,19 +70,19 @@ public class DonateController {
 		}
 		donationForm = buildDonationForm(paramMap);
 		getDonationFormDetail(donationForm);
-		
+
 		if (donationForm.getAmount() < 0) {
 			log.error("amount < 0");
 			return "Error! Please try again later.";
 		}
-		// Init ecpay 
+		// Init ecpay
 		EcpayUtils.initial();
 		String htmlPage = "";
-		
-		// Create merchant_trade_no 
+
+		// Create merchant_trade_no
 		long currentTime = System.currentTimeMillis();
 		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
-		
+
 		switch (donationForm.getPayment_method()) {
 		case "credit_card":
 			htmlPage = EcpayUtils.genAioCheckOutOneTime(config, merchantTradeNo, donationForm);
@@ -103,7 +101,7 @@ public class DonateController {
 		default:
 			break;
 		}
-		
+
 		// Save to "Name-donation-pop-up" table and mark the flag to 0;
 		String target = StringUtils.defaultString(paramMap.get("target"));
 		switch (target) {
@@ -145,14 +143,16 @@ public class DonateController {
 			break;
 		default:
 			break;
-	}		
+		}
+		log.info("currentTime = [" + currentTime + "]");
+		log.info("merchant_trade_no = [" + merchantTradeNo + "]");
 		return htmlPage;
 
 		// Query order
 //		System.out.println("queryTradeInfo: " + EcpayUtils.postQueryTradeInfo());
 //		return "/donate";
 	}
-	
+
 	public DonationForm buildDonationForm(Map<String, String> paramMap) {
 		DonationForm donationForm = new DonationForm();
 		String target = StringUtils.defaultString(paramMap.get("target"));

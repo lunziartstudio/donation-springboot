@@ -19,6 +19,12 @@ public class ElinoraPopUpController {
 	@GetMapping("/Elinora-donation-pop-up")
 	public String donationPopUp(Model model) {
 		model.addAttribute("name", "Elinora");
+		return "popup-iframe";
+	}
+	
+	@GetMapping("/Elinora-iframe")
+	public String iframe(Model model) {
+		model.addAttribute("name", "Elinora");
 		return "donation-pop-up";
 	}
 }

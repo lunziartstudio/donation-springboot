@@ -21,6 +21,12 @@ public class ChristinHuntPopUpController {
 	@GetMapping("/ChristinHunt-donation-pop-up")
 	public String donationPopUp(Model model) {
 		model.addAttribute("name", "ChristinHunt");
+		return "popup-iframe";
+	}
+	
+	@GetMapping("/ChristinHunt-iframe")
+	public String iframe(Model model) {
+		model.addAttribute("name", "ChristinHunt");
 		return "donation-pop-up";
 	}
 }

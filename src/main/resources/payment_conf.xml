@@ -6,9 +6,9 @@
     
     <MerchantInfo>
         <MInfo name="Production_Account">
-            <MerchantID></MerchantID>
-            <HashKey></HashKey>
-            <HashIV></HashIV>
+            <MerchantID>3312453</MerchantID>
+            <HashKey>kQta8NILdI9FLyaV</HashKey>
+            <HashIV>xwrDkZBLYR9oTrCd</HashIV>
         </MInfo>
         <MInfo name="Stage_Account">
             <MerchantID>2000132</MerchantID>

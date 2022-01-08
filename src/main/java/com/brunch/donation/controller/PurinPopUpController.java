@@ -19,6 +19,11 @@ public class PurinPopUpController {
 	@GetMapping("/Purin-donation-pop-up")
 	public String donationPopUp(Model model) {
 		model.addAttribute("name", "Purin");
+		return "popup-iframe";
+	}
+	@GetMapping("/Purin-iframe")
+	public String iframe(Model model) {
+		model.addAttribute("name", "Purin");
 		return "donation-pop-up";
 	}
 }
