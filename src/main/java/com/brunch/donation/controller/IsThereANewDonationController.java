@@ -62,22 +62,22 @@ public class IsThereANewDonationController {
 		DonationPopUp donationPopUp = new DonationPopUp();
 		boolean isDone = false;
 		int size = 0;
-		
+		log.info(streamer);
 		switch (streamer) {
 			case "ChivesWang":
-				chivesWangDonationList = chivesWangDonationPopUpRepo.findChivesWangDonationPopUpByFlag(0);
+				chivesWangDonationList = chivesWangDonationPopUpRepo.findChivesWangDonationPopUpByFlag(1);
 				size = chivesWangDonationList.size();
 				break;
 			case "ChristinHunt":
-				christinHuntDonationPopUpList = christinHuntDonationPopUpRepo.findChristinHuntDonationPopUpByFlag(0);
+				christinHuntDonationPopUpList = christinHuntDonationPopUpRepo.findChristinHuntDonationPopUpByFlag(1);
 				size = christinHuntDonationPopUpList.size();
 				break;
 			case "Elinora":
-				elinoraDonationPopUpList = elinoraDonationPopUpRepo.findElinoraDonationPopUpByFlag(0);
+				elinoraDonationPopUpList = elinoraDonationPopUpRepo.findElinoraDonationPopUpDonationPopUpByFlag(1);
 				size = elinoraDonationPopUpList.size();
 				break;
 			case "Purin":
-				purinDonationPopUpList = purinDonationPopUpRepo.findPurinDonationPopUpByFlag(0);
+				purinDonationPopUpList = purinDonationPopUpRepo.findPurinDonationPopUpByFlag(1);
 				size = purinDonationPopUpList.size();
 				break;
 			default:
@@ -104,6 +104,7 @@ public class IsThereANewDonationController {
 						donationPopUp = convertBean(christinHuntDonationPopUp);
 						break;
 					case "Elinora":
+						log.info("Elinora");
 						elinoraDonationPopUp = elinoraDonationPopUpList.get(0);
 						elinoraDonationPopUpRepo.delete(elinoraDonationPopUp);
 						donationPopUp = convertBean(elinoraDonationPopUp);
@@ -123,6 +124,7 @@ public class IsThereANewDonationController {
 					"Delete donation pop up failed. Donation pop up id = [" + donationPopUp.get_id() + "]");
 			isDone = false;
 		}
+		log.info("size = " + size);
 	
 		return (size > 0 && isDone == true) ? donationPopUp : null;
 	}

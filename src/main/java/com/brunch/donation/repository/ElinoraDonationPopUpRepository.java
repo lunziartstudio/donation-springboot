@@ -14,6 +14,6 @@ public interface ElinoraDonationPopUpRepository extends MongoRepository<ElinoraD
 	@Query("{merchant_trade_no: '?0'}")
 	ElinoraDonationPopUp findElinoraDonationPopUpByMerchantOrderNo(String merchantOrderNo);
 	
-	@Query("{flag: '?0'}")
-	List<ElinoraDonationPopUp> findElinoraDonationPopUpByFlag(int flag);
+	@Query("{flag: ?0}")
+	List<ElinoraDonationPopUp> findElinoraDonationPopUpDonationPopUpByFlag(int flag);
 }

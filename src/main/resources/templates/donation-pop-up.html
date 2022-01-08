@@ -6,7 +6,7 @@
 	<script src="/webjars/jquery/jquery.min.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
-	<script src="/js/query-new-donation.js"></script>
+	<!-- <script src="/js/query-new-donation.js"></script> -->
 	<style>
 		body{
 		  font-family: " Open Sans ";
@@ -24,6 +24,38 @@
             sendRequest(streamer);
             setTimeout(send, 15000);
         })();
+	  	
+	  	function sendRequest(streamer) {
+//	  		fetch('https://ecpay545.herokuapp.com/is-there-a-new-donation?streamer=' + streamer)
+	  		fetch('http://localhost:8080/is-there-a-new-donation?streamer=' + streamer)
+	  			.then(function(response) {
+	  				if (response.status == 200) {
+	  					return response.json();
+	  				}
+	  				else {
+	  					return null;
+	  				}
+	  			})
+	  			.then(function(json) {
+	  				if (json != null) {
+	  					// console.log(json);
+	  					let img = "/images/doge.jpg"
+	  					let image = '<img src=' + img + ' display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
+	  					let nameAndAmount = `<p id="donation-text" style="margin: 15px 0 0 0; text-align: center; -webkit-text-stroke: 0.5px black; color: white;font-size: 30px;">感謝 ${json.name} 贊助的 ${json.amount} 元!</p>`;
+	  					let message = `<p id="donation-text" style=" text-align: center; padding-left: 100px; padding-right: 100px; -webkit-text-stroke: 0.5px black; color: white; margin-top: 0px; font-size: 30px;">${json.message}</p>`;
+	  					refresh(image + nameAndAmount + message);
+	  				}
+	  			});
+	  	}
+
+	  	function refresh(content) {
+	  		$("#donation-content").replaceWith(content);
+	  		$("#donation").each(function() {
+	  			$(this).hide();
+	  			$(this).delay(1250).fadeIn(1000).delay(7000).fadeOut(1250);
+	  		});
+	  	}
+
 	</script>
 	<div id="donation">
 		<div id="donation-content"></div>

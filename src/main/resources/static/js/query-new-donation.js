@@ -35,7 +35,8 @@ function connect(name, callback) {
 */
 
 function sendRequest(streamer) {
-	fetch('https://ecpay545.herokuapp.com/is-there-a-new-donation?streamer=' + streamer)
+//	fetch('https://ecpay545.herokuapp.com/is-there-a-new-donation?streamer=' + streamer)
+	fetch('http://localhost:8080/is-there-a-new-donation?streamer=' + streamer)
 		.then(function(response) {
 			if (response.status == 200) {
 				return response.json();
@@ -47,7 +48,8 @@ function sendRequest(streamer) {
 		.then(function(json) {
 			if (json != null) {
 				// console.log(json);
-				let image = '<img src="./image/doge.jpg"; display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
+				let img = "/images/doge.jpg"
+				let image = '<img th:src="@{' + img + '}" display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
 				let nameAndAmount = `<p id="donation-text" style="margin: 15px 0 0 0; text-align: center; -webkit-text-stroke: 0.5px black; color: white;font-size: 30px;">感謝 ${json.name} 贊助的 ${json.amount} 元!</p>`;
 				let message = `<p id="donation-text" style=" text-align: center; padding-left: 100px; padding-right: 100px; -webkit-text-stroke: 0.5px black; color: white; margin-top: 0px; font-size: 30px;">${json.message}</p>`;
 				refresh(image + nameAndAmount + message);
