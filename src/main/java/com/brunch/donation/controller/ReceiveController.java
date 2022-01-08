@@ -103,7 +103,6 @@ public class ReceiveController {
 				List<Donation> donationList = streamer.getDonation();
 				donationList.add(donation);
 				streamerRepo.save(streamer);
-				isSuccess = true;
 				
 				// Insert into "Name-donation-pop-up" table.
 				switch (target) {
@@ -138,9 +137,13 @@ public class ReceiveController {
 					default:
 						break;
 				}
+				isSuccess = true;
 			} catch (Exception e) {
-				log.error("Insert donation fail, requestBody = ");
+				log.error("Insert donation fail", e);
 			}
+		}
+		else {
+			log.error("CheckSum is not correct.");
 		}
 		log.info("isSuccess = [" + isSuccess + "]");
 		return isSuccess ? "1|OK" : "0|ERROR|";
