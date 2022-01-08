@@ -74,7 +74,6 @@ public class ReceiveController {
 		// 9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE
 		// ecpay規定交易成功須回傳"1|OK"
 		boolean isSuccess = false;
-		log.info("received, merchantTradeNo = [" + requstBody.get("CustomField1").split(",")[1] + "]");
 		// 驗證檢查碼
 		Hashtable<String, String> dict = new Hashtable<String, String>();
 		dict.putAll(requstBody);
