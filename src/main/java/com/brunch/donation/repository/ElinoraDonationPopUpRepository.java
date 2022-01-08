@@ -11,7 +11,7 @@ import com.brunch.donation.model.donationpopup.ElinoraDonationPopUp;
 import com.brunch.donation.model.donationpopup.PurinDonationPopUp;
 
 public interface ElinoraDonationPopUpRepository extends MongoRepository<ElinoraDonationPopUp, String> {
-	@Query("{merchant_order_no: '?0'}")
+	@Query("{merchant_trade_no: '?0'}")
 	ElinoraDonationPopUp findElinoraDonationPopUpByMerchantOrderNo(String merchantOrderNo);
 	
 	@Query("{flag: '?0'}")

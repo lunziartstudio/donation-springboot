@@ -10,7 +10,7 @@ import com.brunch.donation.model.donationpopup.ChivesWangDonationPopUp;
 import com.brunch.donation.model.donationpopup.ChristinHuntDonationPopUp;
 
 public interface ChivesWangDonationPopUpRepository extends MongoRepository<ChivesWangDonationPopUp, String> {
-	@Query("{merchant_order_no: '?0'}")
+	@Query("{merchant_trade_no: '?0'}")
 	ChivesWangDonationPopUp findChivesWangDonationPopUpByMerchantOrderNo(String merchantOrderNo);
 	
 	@Query("{flag: '?0'}")
