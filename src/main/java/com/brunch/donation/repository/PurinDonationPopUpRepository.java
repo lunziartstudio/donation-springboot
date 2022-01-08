@@ -13,6 +13,6 @@ public interface PurinDonationPopUpRepository extends MongoRepository<PurinDonat
 	@Query("{merchant_trade_no: '?0'}")
 	PurinDonationPopUp findPurinDonationPopUpByMerchantOrderNo(String merchantOrderNo);
 	
-	@Query("{flag: '?0'}")
+	@Query("{flag: ?0}")
 	List<PurinDonationPopUp> findPurinDonationPopUpByFlag(int flag);
 }

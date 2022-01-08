@@ -13,6 +13,6 @@ public interface ChivesWangDonationPopUpRepository extends MongoRepository<Chive
 	@Query("{merchant_trade_no: '?0'}")
 	ChivesWangDonationPopUp findChivesWangDonationPopUpByMerchantOrderNo(String merchantOrderNo);
 	
-	@Query("{flag: '?0'}")
+	@Query("{flag: ?0}")
 	List<ChivesWangDonationPopUp> findChivesWangDonationPopUpByFlag(int flag);
 }

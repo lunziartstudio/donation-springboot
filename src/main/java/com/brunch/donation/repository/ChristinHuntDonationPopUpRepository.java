@@ -13,6 +13,6 @@ public interface ChristinHuntDonationPopUpRepository extends MongoRepository<Chr
 	@Query("{merchant_trade_no: '?0'}")
 	ChristinHuntDonationPopUp findChristinHuntDonationPopUpByMerchantOrderNo(String merchantOrderNo);
 	
-	@Query("{flag: '?0'}")
+	@Query("{flag: ?0}")
 	List<ChristinHuntDonationPopUp> findChristinHuntDonationPopUpByFlag(int flag);
 }
