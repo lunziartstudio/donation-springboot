@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class DonationForm {
 	private String name;
 	private String payment_method;
-	private String amount;
+	private int amount;
 	private String message;
 	private String target;
 
@@ -26,11 +26,11 @@ public class DonationForm {
 		this.payment_method = payment_method;
 	}
 
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 

@@ -8,5 +8,6 @@ import com.brunch.donation.model.donationpopup.ChivesWangDonationPopUp;
 import com.brunch.donation.model.donationpopup.ElinoraDonationPopUp;
 
 public interface ElinoraDonationPopUpRepository extends MongoRepository<ElinoraDonationPopUp, String> {
-	
+	@Query("{merchant_order_no: '?0'}")
+	ElinoraDonationPopUp findElinoraDonationPopUpByMerchantOrderNo(String merchantOrderNo);
 }

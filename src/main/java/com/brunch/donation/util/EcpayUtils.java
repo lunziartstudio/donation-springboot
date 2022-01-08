@@ -132,20 +132,15 @@ public class  EcpayUtils{
 		return all.queryCreditCardPeriodInfo(obj);
 	}
 
-	public static String genAioCheckOutWebATM(Config config, DonationForm donationForm) {
+	public static String genAioCheckOutWebATM(Config config, String merchantTradeNo, DonationForm donationForm) {
 		AioCheckOutWebATM obj = new AioCheckOutWebATM();
 		long currentTime = System.currentTimeMillis();
-		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
 		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
 		String totalAmount = String.valueOf(donationForm.getAmount());
 		String tradeDesc = "DonationByWebATM";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
 		String target = donationForm.getTarget();
-		String payment_method = donationForm.getPayment_method();
-		String amount = donationForm.getAmount();
-		String donator = donationForm.getName();
-		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -154,10 +149,7 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setCustomField1(target + "," + merchantTradeNo);
-		obj.setCustomField2(payment_method);
-		obj.setCustomField3(amount);
-		obj.setCustomField4(donator + "," + message);
+		obj.setCustomField1(target);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
@@ -178,20 +170,15 @@ public class  EcpayUtils{
 		return form;
 	}
 
-	public static String genAioCheckOutATM(Config config, DonationForm donationForm) {
+	public static String genAioCheckOutATM(Config config, String merchantTradeNo, DonationForm donationForm) {
 		AioCheckOutATM obj = new AioCheckOutATM();
 		long currentTime = System.currentTimeMillis();
-		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
 		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
 		String totalAmount = String.valueOf(donationForm.getAmount());
 		String tradeDesc = "DonationByWebATM";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
 		String target = donationForm.getTarget();
-		String payment_method = donationForm.getPayment_method();
-		String amount = donationForm.getAmount();
-		String donator = donationForm.getName();
-		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -201,10 +188,7 @@ public class  EcpayUtils{
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		obj.setExpireDate("7");
-		obj.setCustomField1(target + "," + merchantTradeNo);
-		obj.setCustomField2(payment_method);
-		obj.setCustomField3(amount);
-		obj.setCustomField4(donator + "," + message);
+		obj.setCustomField1(target);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}
@@ -223,22 +207,17 @@ public class  EcpayUtils{
 		return form;
 	}
 
-	public static String genAioCheckOutCVS(Config config, DonationForm donationForm) {
+	public static String genAioCheckOutCVS(Config config, String merchantTradeNo, DonationForm donationForm) {
 		AioCheckOutCVS obj = new AioCheckOutCVS();
 //		InvoiceObj invoice = new InvoiceObj();
 		
 		long currentTime = System.currentTimeMillis();
-		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
 		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
 		String totalAmount = String.valueOf(donationForm.getAmount());
 		String tradeDesc = "DonationByCvsBarcode";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
 		String target = donationForm.getTarget();
-		String payment_method = donationForm.getPayment_method();
-		String amount = donationForm.getAmount();
-		String donator = donationForm.getName();
-		String message = donationForm.getMessage();
 		
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -247,10 +226,7 @@ public class  EcpayUtils{
 		obj.setItemName(itemName);
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
-		obj.setCustomField1(target + "," + merchantTradeNo);
-		obj.setCustomField2(payment_method);
-		obj.setCustomField3(amount);
-		obj.setCustomField4(donator + "," + message);
+		obj.setCustomField1(target);
 		// invoice
 //		obj.setInvoiceMark("Y");
 //		invoice.setRelateNumber("test202017test");
@@ -290,20 +266,15 @@ public class  EcpayUtils{
 		return form;
 	}
 
-	public static String genAioCheckOutOneTime(Config config, DonationForm donationForm) {
+	public static String genAioCheckOutOneTime(Config config, String merchantTradeNo, DonationForm donationForm) {
 		AioCheckOutOneTime obj = new AioCheckOutOneTime();
 		long currentTime = System.currentTimeMillis();
-		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
 		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(currentTime);
 		String totalAmount = String.valueOf(donationForm.getAmount());
 		String tradeDesc = "DonationByCreditCard";
 		String itemName = "Donation";
 		String returnURL = config.getReturnURL();
 		String target = donationForm.getTarget();
-		String payment_method = donationForm.getPayment_method();
-		String amount = donationForm.getAmount();
-		String donator = donationForm.getName();
-		String message = donationForm.getMessage();
 
 		obj.setMerchantTradeNo(merchantTradeNo);
 		obj.setMerchantTradeDate(merchantTradeDate);
@@ -313,10 +284,7 @@ public class  EcpayUtils{
 		obj.setReturnURL(returnURL);
 		obj.setNeedExtraPaidInfo("N");
 		obj.setRedeem("Y");
-		obj.setCustomField1(target + "," + merchantTradeNo);
-		obj.setCustomField2(payment_method);
-		obj.setCustomField3(amount);
-		obj.setCustomField4(donator + "," + message);
+		obj.setCustomField1(target);
 		String form = all.aioCheckOut(obj, null);
 		return form;
 	}

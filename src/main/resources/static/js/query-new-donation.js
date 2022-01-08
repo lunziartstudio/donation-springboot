@@ -35,7 +35,7 @@ function connect(name, callback) {
 */
 
 function sendRequest(streamer) {
-	fetch('http://localhost:8080/is-there-a-new-donation?streamer=' + streamer)
+	fetch('https://ecpay545.herokuapp.com/is-there-a-new-donation?streamer=' + streamer)
 		.then(function(response) {
 			if (response.status == 200) {
 				return response.json();

@@ -55,7 +55,7 @@ public class ReceiveController {
 
 	@Autowired
 	StreamerRepository streamerRepo;
-	
+
 	@Autowired
 	ChivesWangDonationPopUpRepository chivesWangDonationPopUpRepo;
 
@@ -64,7 +64,7 @@ public class ReceiveController {
 
 	@Autowired
 	ElinoraDonationPopUpRepository elinoraDonationPopUpRepo;
-	
+
 	@Autowired
 	PurinDonationPopUpRepository purinDonationPopUpRepo;
 
@@ -74,25 +74,63 @@ public class ReceiveController {
 		// 9699C8A1CF16DF49930F522BF761640ED37A87862C43A6A6B1EE6CC96CF13FEE
 		// ecpay規定交易成功須回傳"1|OK"
 		boolean isSuccess = false;
-		log.info("received");
+		log.info("received, merchantTradeNo = [" + requstBody.get("CustomField1").split(",")[1] + "]");
 		// 驗證檢查碼
 		Hashtable<String, String> dict = new Hashtable<String, String>();
 		dict.putAll(requstBody);
 
 		if (EcpayUtils.cmprChkMacValue(config, dict)) {
-			// Insert into "streamer" table.
+
 			try {
-				String target = requstBody.get("CustomField1").split(",")[0];
-				String merchantTradeNo = requstBody.get("CustomField1").split(",")[1];
+				String merchantTradeNo = requstBody.get("MerchantTradeNo");
+				String target = requstBody.get("CustomField1");
+				// Insert into "streamer" table.
 				Donation donation = new Donation();
 				donation.set_id(new ObjectId());
 				donation.setMerchant_trade_no(merchantTradeNo);
-				donation.setPayment_method(requstBody.get("CustomField2"));
-				donation.setAmount(Integer.valueOf(requstBody.get("CustomField3")));
-				String donator = requstBody.get("CustomField4").split(",")[0];
-				String message = requstBody.get("CustomField4").split(",")[1];
-				donation.setName(donator);
-				donation.setMessage(message);
+				donation.setPayment_method(requstBody.get("PaymentType"));
+
+				// Find the donation "Name-donation-pop-up" by merchant_order_no and flag = 0
+				switch (target) {
+				case "ChivesWang":
+					ChivesWangDonationPopUp chivesWangDonationPopUp = chivesWangDonationPopUpRepo
+							.findChivesWangDonationPopUpByMerchantOrderNo(merchantTradeNo);
+					chivesWangDonationPopUp.setFlag(1);
+					donation.setAmount(chivesWangDonationPopUp.getAmount());
+					donation.setName(chivesWangDonationPopUp.getName());
+					donation.setMessage(chivesWangDonationPopUp.getMessage());
+					chivesWangDonationPopUpRepo.save(chivesWangDonationPopUp);
+					break;
+				case "ChristinHunt":
+					ChristinHuntDonationPopUp christinHuntDonationPopUp = christinHuntDonationPopUpRepo
+							.findChristinHuntDonationPopUpByMerchantOrderNo(merchantTradeNo);
+					christinHuntDonationPopUp.setFlag(1);
+					donation.setAmount(christinHuntDonationPopUp.getAmount());
+					donation.setName(christinHuntDonationPopUp.getName());
+					donation.setMessage(christinHuntDonationPopUp.getMessage());
+					christinHuntDonationPopUpRepo.save(christinHuntDonationPopUp);
+					break;
+				case "Elinora":
+					ElinoraDonationPopUp elinoraDonationPopUp = elinoraDonationPopUpRepo
+							.findElinoraDonationPopUpByMerchantOrderNo(merchantTradeNo);
+					elinoraDonationPopUp.setFlag(1);
+					donation.setAmount(elinoraDonationPopUp.getAmount());
+					donation.setName(elinoraDonationPopUp.getName());
+					donation.setMessage(elinoraDonationPopUp.getMessage());
+					elinoraDonationPopUpRepo.save(elinoraDonationPopUp);
+					break;
+				case "Purin":
+					PurinDonationPopUp purinDonationPopUp = purinDonationPopUpRepo
+							.findPurinDonationPopUpByMerchantOrderNo(merchantTradeNo);
+					purinDonationPopUp.setFlag(1);
+					donation.setAmount(purinDonationPopUp.getAmount());
+					donation.setName(purinDonationPopUp.getName());
+					donation.setMessage(purinDonationPopUp.getMessage());
+					purinDonationPopUpRepo.save(purinDonationPopUp);
+					break;
+				default:
+					break;
+				}
 				// MongoDB 需要轉換+8小時
 				Calendar ca = Calendar.getInstance();
 				ca.setTime(new Date());
@@ -103,47 +141,13 @@ public class ReceiveController {
 				List<Donation> donationList = streamer.getDonation();
 				donationList.add(donation);
 				streamerRepo.save(streamer);
-				
-				// Insert into "Name-donation-pop-up" table.
-				switch (target) {
-					case "ChivesWang":
-						ChivesWangDonationPopUp chivesWangDonationPopUp = new ChivesWangDonationPopUp();
-						chivesWangDonationPopUp.setName(donation.getName());
-						chivesWangDonationPopUp.setAmount(donation.getAmount());
-						chivesWangDonationPopUp.setMessage(donation.getMessage());
-						chivesWangDonationPopUpRepo.save(chivesWangDonationPopUp);
-						break;
-					case "ChristinHunt":
-						ChristinHuntDonationPopUp christinHuntDonationPopUp = new ChristinHuntDonationPopUp();
-						christinHuntDonationPopUp.setName(donation.getName());
-						christinHuntDonationPopUp.setAmount(donation.getAmount());
-						christinHuntDonationPopUp.setMessage(donation.getMessage());
-						christinHuntDonationPopUpRepo.save(christinHuntDonationPopUp);
-						break;
-					case "Elinora":
-						ElinoraDonationPopUp elinoraDonationPopUp = new ElinoraDonationPopUp();
-						elinoraDonationPopUp.setName(donation.getName());
-						elinoraDonationPopUp.setAmount(donation.getAmount());
-						elinoraDonationPopUp.setMessage(donation.getMessage());
-						elinoraDonationPopUpRepo.save(elinoraDonationPopUp);
-						break;
-					case "Purin":
-						PurinDonationPopUp purinDonationPopUp = new PurinDonationPopUp();
-						purinDonationPopUp.setName(donation.getName());
-						purinDonationPopUp.setAmount(donation.getAmount());
-						purinDonationPopUp.setMessage(donation.getMessage());
-						purinDonationPopUpRepo.save(purinDonationPopUp);
-						break;
-					default:
-						break;
-				}
 				isSuccess = true;
 			} catch (Exception e) {
 				log.error("Insert donation fail", e);
 			}
-		}
-		else {
-			log.error("CheckSum is not correct.");
+		} else {
+			log.error("CheckSum is not correct, merchantTradeNo = [" + requstBody.get("CustomField1").split(",")[1]
+					+ "]");
 		}
 		log.info("isSuccess = [" + isSuccess + "]");
 		return isSuccess ? "1|OK" : "0|ERROR|";
@@ -155,8 +159,7 @@ public class ReceiveController {
 		modelAndView.setViewName("alert.html");
 		return modelAndView;
 	}
-	
-	
+
 //	@PostMapping("/getTest")
 //	public void test() {
 //		String name = "streamer01";

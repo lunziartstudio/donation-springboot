@@ -18,8 +18,17 @@ import com.brunch.donation.config.Config;
 import com.brunch.donation.model.Donation;
 import com.brunch.donation.model.DonationForm;
 import com.brunch.donation.model.Streamer;
+import com.brunch.donation.model.donationpopup.ChivesWangDonationPopUp;
+import com.brunch.donation.model.donationpopup.ChristinHuntDonationPopUp;
+import com.brunch.donation.model.donationpopup.ElinoraDonationPopUp;
+import com.brunch.donation.model.donationpopup.PurinDonationPopUp;
+import com.brunch.donation.repository.ChivesWangDonationPopUpRepository;
+import com.brunch.donation.repository.ChristinHuntDonationPopUpRepository;
+import com.brunch.donation.repository.ElinoraDonationPopUpRepository;
+import com.brunch.donation.repository.PurinDonationPopUpRepository;
 import com.brunch.donation.repository.StreamerRepository;
 import com.brunch.donation.util.EcpayUtils;
+import com.brunch.donation.util.OrderNoUtils;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
@@ -36,6 +45,19 @@ public class DonateController {
 
 	@Autowired
 	EcpayUtils ecpayUtils;
+	
+	@Autowired
+	ChivesWangDonationPopUpRepository chivesWangDonationPopUpRepo;
+
+	@Autowired
+	ChristinHuntDonationPopUpRepository christinHuntDonationPopUpRepo;
+
+	@Autowired
+	ElinoraDonationPopUpRepository elinoraDonationPopUpRepo;
+	
+	@Autowired
+	PurinDonationPopUpRepository purinDonationPopUpRepo;
+	
 
 	@PostMapping("/donate")
 	public String donation(@RequestBody String paramStr) throws UnsupportedEncodingException {
@@ -48,54 +70,110 @@ public class DonateController {
 			paramMap.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
 					URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
 		}
-
-//		System.out.println(queryMap);
-		donationForm.setName(StringUtils.defaultString(paramMap.get("name")));
-		donationForm.setPayment_method(StringUtils.defaultString(paramMap.get("payment_method")));
-		donationForm.setAmount(StringUtils.defaultString(paramMap.get("amount")));
-		donationForm.setMessage(StringUtils.defaultString(paramMap.get("message")));
-		donationForm.setTarget(StringUtils.defaultString(paramMap.get("target")));
+		donationForm = buildDonationForm(paramMap);
 		getDonationFormDetail(donationForm);
-		if (Integer.parseInt(donationForm.getAmount()) < 0) {
+		
+		if (donationForm.getAmount() < 0) {
 			log.error("amount < 0");
 			return "Error! Please try again later.";
 		}
-		// init ecpay
+		// Init ecpay 
 		EcpayUtils.initial();
 		String htmlPage = "";
-
+		
+		// Create merchant_trade_no 
+		long currentTime = System.currentTimeMillis();
+		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
+		
 		switch (donationForm.getPayment_method()) {
 		case "credit_card":
-			htmlPage = EcpayUtils.genAioCheckOutOneTime(config, donationForm);
+			htmlPage = EcpayUtils.genAioCheckOutOneTime(config, merchantTradeNo, donationForm);
 			break;
 		case "cvs_barcode":
-			htmlPage = EcpayUtils.genAioCheckOutCVS(config, donationForm);
+			htmlPage = EcpayUtils.genAioCheckOutCVS(config, merchantTradeNo, donationForm);
 			break;
 		case "webATM":
-			htmlPage = EcpayUtils.genAioCheckOutWebATM(config, donationForm);
+			htmlPage = EcpayUtils.genAioCheckOutWebATM(config, merchantTradeNo, donationForm);
 			break;
 		case "ATM":
-			htmlPage = EcpayUtils.genAioCheckOutATM(config, donationForm);
+			htmlPage = EcpayUtils.genAioCheckOutATM(config, merchantTradeNo, donationForm);
 			break;
 //			case "ALL":
 //				htmlPage = EcpayUtils.genAioCheckOutALL(config, donationForm);
 		default:
 			break;
 		}
+		
+		// Save to "Name-donation-pop-up" table and mark the flag to 0;
+		String target = StringUtils.defaultString(paramMap.get("target"));
+		switch (target) {
+		case "ChivesWang":
+			ChivesWangDonationPopUp chivesWangDonationPopUp = new ChivesWangDonationPopUp();
+			chivesWangDonationPopUp.setMerchant_trade_no(merchantTradeNo);
+			chivesWangDonationPopUp.setName(donationForm.getName());
+			chivesWangDonationPopUp.setAmount(donationForm.getAmount());
+			chivesWangDonationPopUp.setMessage(donationForm.getMessage());
+			chivesWangDonationPopUp.setFlag(0);
+			chivesWangDonationPopUpRepo.save(chivesWangDonationPopUp);
+			break;
+		case "ChristinHunt":
+			ChristinHuntDonationPopUp christinHuntDonationPopUp = new ChristinHuntDonationPopUp();
+			christinHuntDonationPopUp.setMerchant_trade_no(merchantTradeNo);
+			christinHuntDonationPopUp.setName(donationForm.getName());
+			christinHuntDonationPopUp.setAmount(donationForm.getAmount());
+			christinHuntDonationPopUp.setMessage(donationForm.getMessage());
+			christinHuntDonationPopUp.setFlag(0);
+			christinHuntDonationPopUpRepo.save(christinHuntDonationPopUp);
+			break;
+		case "Elinora":
+			ElinoraDonationPopUp elinoraDonationPopUp = new ElinoraDonationPopUp();
+			elinoraDonationPopUp.setMerchant_trade_no(merchantTradeNo);
+			elinoraDonationPopUp.setName(donationForm.getName());
+			elinoraDonationPopUp.setAmount(donationForm.getAmount());
+			elinoraDonationPopUp.setMessage(donationForm.getMessage());
+			elinoraDonationPopUp.setFlag(0);
+			elinoraDonationPopUpRepo.save(elinoraDonationPopUp);
+			break;
+		case "Purin":
+			PurinDonationPopUp purinDonationPopUp = new PurinDonationPopUp();
+			purinDonationPopUp.setMerchant_trade_no(merchantTradeNo);
+			purinDonationPopUp.setName(donationForm.getName());
+			purinDonationPopUp.setAmount(donationForm.getAmount());
+			purinDonationPopUp.setMessage(donationForm.getMessage());
+			purinDonationPopUp.setFlag(0);
+			purinDonationPopUpRepo.save(purinDonationPopUp);
+			break;
+		default:
+			break;
+	}		
 		return htmlPage;
 
 		// Query order
 //		System.out.println("queryTradeInfo: " + EcpayUtils.postQueryTradeInfo());
 //		return "/donate";
 	}
+	
+	public DonationForm buildDonationForm(Map<String, String> paramMap) {
+		DonationForm donationForm = new DonationForm();
+		String target = StringUtils.defaultString(paramMap.get("target"));
+		String name = StringUtils.defaultString(paramMap.get("name"));
+		String payment_method = StringUtils.defaultString(paramMap.get("payment_method"));
+		int amount = Integer.valueOf(StringUtils.defaultString(paramMap.get("amount")));
+		String message = StringUtils.defaultString(paramMap.get("message"));
+		donationForm.setTarget(target);
+		donationForm.setName(name);
+		donationForm.setPayment_method(payment_method);
+		donationForm.setAmount(amount);
+		donationForm.setMessage(message);
+		return donationForm;
+	}
 
 	public void getDonationFormDetail(DonationForm donationForm) {
+		log.info(donationForm.getTarget());
 		log.info(donationForm.getName());
 		log.info(donationForm.getPayment_method());
-		log.info(donationForm.getAmount());
+		log.info(String.valueOf(donationForm.getAmount()));
 		log.info(donationForm.getMessage());
-		log.info(donationForm.getTarget());
-
 	}
 
 	public void getDetail(Streamer streamer) {
