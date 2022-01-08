@@ -41,8 +41,8 @@
 	  					// console.log(json);
 	  					let img = "/images/doge.jpg"
 	  					let image = '<img src=' + img + ' display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
-	  					let name = json.name
-	  					if (json.name == null) {
+	  					let name = json.name;
+	  					if (json.name == "") {
 	  						name = "匿名"
 	  					}
 	  					let nameAndAmount = `<p id="donation-text" style="margin: 15px 0 0 0; text-align: center; -webkit-text-stroke: 0.5px black; color: white;font-size: 30px;">感謝 ${name} 贊助的 ${json.amount} 元!</p>`;
