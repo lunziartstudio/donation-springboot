@@ -19,7 +19,7 @@
 		//connect(json, sendRequest);
 		/*<![CDATA[*/
 		let streamer = /*[[${name}]]*/ "";
-		let img = /*[[${donationImg}]]*/ "";
+		let donationImg = /*[[${donationImg}]]*/ "";
 		/*]]>*/
 	  	(function send() {
             // do some stuff
@@ -42,7 +42,7 @@
 	  			})
 	  			.then(function(json) {
 	  				if (json != null) {
-	  					let img = "/images/pop-up/" + img;
+	  					let img = "/images/pop-up/" + donationImg;
 	  					// let image = '<img src=' + img + ' display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
 	  					let image = '<img src=' + img + ' display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
 	  					let name = json.name;
