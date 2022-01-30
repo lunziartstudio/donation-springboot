@@ -17,9 +17,10 @@
 <body>
 	<script th:inline="javascript">
 		//connect(json, sendRequest);
-		let streamer = /*[[${name}]]*/ 'default';
-		let img = /*[[${donation-pic}]]*/ 'default';
-    	
+		/*<![CDATA[*/
+		let streamer = /*[[${name}]]*/ "";
+		let img = /*[[${donationImg}]]*/ "";
+		/*]]>*/
 	  	(function send() {
             // do some stuff
             sendRequest(streamer);
@@ -27,9 +28,9 @@
         })();
 	  	
 	  	function sendRequest(streamer) {
-	  		fetch('https://lamplighter5-donation-test.herokuapp.com/is-there-a-new-donation?streamer=' + streamer)
+	  		// fetch('https://lamplighter5-donation-test.herokuapp.com/is-there-a-new-donation?streamer=' + streamer)
 	  		//fetch('https://ecpay545.herokuapp.com/is-there-a-new-donation?streamer=' + streamer)
-	  		// fetch('http://localhost:8080/is-there-a-new-donation?streamer=' + streamer)
+	  		fetch('http://localhost:8080/is-there-a-new-donation?streamer=' + streamer)
 	  		// fetch('https://lamplighter5.tw/is-there-a-new-donation?streamer=' + streamer)
 	  			.then(function(response) {
 	  				if (response.status == 200) {

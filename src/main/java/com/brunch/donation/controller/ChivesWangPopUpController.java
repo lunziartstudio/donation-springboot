@@ -26,7 +26,7 @@ public class ChivesWangPopUpController {
 	@GetMapping("/ChivesWang-iframe")
 	public String iframe(Model model) {
 		model.addAttribute("name", "ChivesWang");
-		model.addAttribute("donation-pic", "220124_ChivesWang.gif");
+		model.addAttribute("donationImg", "220124_ChivesWang.gif");
 		return "donation-pop-up";
 	}
 }
