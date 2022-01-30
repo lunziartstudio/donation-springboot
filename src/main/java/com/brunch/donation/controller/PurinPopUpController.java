@@ -21,9 +21,11 @@ public class PurinPopUpController {
 		model.addAttribute("name", "Purin");
 		return "popup-iframe";
 	}
+	
 	@GetMapping("/Purin-iframe")
 	public String iframe(Model model) {
 		model.addAttribute("name", "Purin");
+		model.addAttribute("donation-pic", "220111_Purin.gif");
 		return "donation-pop-up";
 	}
 }

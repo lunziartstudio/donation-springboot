@@ -17,7 +17,8 @@
 <body>
 	<script th:inline="javascript">
 		//connect(json, sendRequest);
-		var streamer = /*[[${name}]]*/ 'default';
+		let streamer = /*[[${name}]]*/ 'default';
+		let img = /*[[${donation-pic}]]*/ 'default';
     	
 	  	(function send() {
             // do some stuff
@@ -40,8 +41,8 @@
 	  			})
 	  			.then(function(json) {
 	  				if (json != null) {
-	  					// console.log(json);
-	  					let img = "/images/doge.jpg"
+	  					let img = "/images/pop-up/" + img;
+	  					// let image = '<img src=' + img + ' display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
 	  					let image = '<img src=' + img + ' display:none; style="height: auto; max-width: 60%; display: block; margin-left: auto; margin-right: auto;" height="100%">'
 	  					let name = json.name;
 	  					if (json.name == "") {

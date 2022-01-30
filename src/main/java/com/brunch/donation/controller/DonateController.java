@@ -84,65 +84,65 @@ public class DonateController {
 		String merchantTradeNo = OrderNoUtils.genOrderNo(currentTime);
 
 		switch (donationForm.getPayment_method()) {
-		case "credit_card":
-			htmlPage = EcpayUtils.genAioCheckOutOneTime(config, merchantTradeNo, donationForm);
-			break;
-		case "cvs_barcode":
-			htmlPage = EcpayUtils.genAioCheckOutCVS(config, merchantTradeNo, donationForm);
-			break;
-		case "webATM":
-			htmlPage = EcpayUtils.genAioCheckOutWebATM(config, merchantTradeNo, donationForm);
-			break;
-		case "ATM":
-			htmlPage = EcpayUtils.genAioCheckOutATM(config, merchantTradeNo, donationForm);
-			break;
+			case "credit_card":
+				htmlPage = EcpayUtils.genAioCheckOutOneTime(config, merchantTradeNo, donationForm);
+				break;
+			case "cvs_barcode":
+				htmlPage = EcpayUtils.genAioCheckOutCVS(config, merchantTradeNo, donationForm);
+				break;
+			case "webATM":
+				htmlPage = EcpayUtils.genAioCheckOutWebATM(config, merchantTradeNo, donationForm);
+				break;
+			case "ATM":
+				htmlPage = EcpayUtils.genAioCheckOutATM(config, merchantTradeNo, donationForm);
+				break;
 //			case "ALL":
 //				htmlPage = EcpayUtils.genAioCheckOutALL(config, donationForm);
-		default:
-			break;
+			default:
+				break;
 		}
 
 		// Save to "Name-donation-pop-up" table and mark the flag to 0;
 		String target = StringUtils.defaultString(paramMap.get("target"));
 		switch (target) {
-		case "ChivesWang":
-			ChivesWangDonationPopUp chivesWangDonationPopUp = new ChivesWangDonationPopUp();
-			chivesWangDonationPopUp.setMerchant_trade_no(merchantTradeNo);
-			chivesWangDonationPopUp.setName(donationForm.getName());
-			chivesWangDonationPopUp.setAmount(donationForm.getAmount());
-			chivesWangDonationPopUp.setMessage(donationForm.getMessage());
-			chivesWangDonationPopUp.setFlag(0);
-			chivesWangDonationPopUpRepo.save(chivesWangDonationPopUp);
-			break;
-		case "ChristinHunt":
-			ChristinHuntDonationPopUp christinHuntDonationPopUp = new ChristinHuntDonationPopUp();
-			christinHuntDonationPopUp.setMerchant_trade_no(merchantTradeNo);
-			christinHuntDonationPopUp.setName(donationForm.getName());
-			christinHuntDonationPopUp.setAmount(donationForm.getAmount());
-			christinHuntDonationPopUp.setMessage(donationForm.getMessage());
-			christinHuntDonationPopUp.setFlag(0);
-			christinHuntDonationPopUpRepo.save(christinHuntDonationPopUp);
-			break;
-		case "Elinora":
-			ElinoraDonationPopUp elinoraDonationPopUp = new ElinoraDonationPopUp();
-			elinoraDonationPopUp.setMerchant_trade_no(merchantTradeNo);
-			elinoraDonationPopUp.setName(donationForm.getName());
-			elinoraDonationPopUp.setAmount(donationForm.getAmount());
-			elinoraDonationPopUp.setMessage(donationForm.getMessage());
-			elinoraDonationPopUp.setFlag(0);
-			elinoraDonationPopUpRepo.save(elinoraDonationPopUp);
-			break;
-		case "Purin":
-			PurinDonationPopUp purinDonationPopUp = new PurinDonationPopUp();
-			purinDonationPopUp.setMerchant_trade_no(merchantTradeNo);
-			purinDonationPopUp.setName(donationForm.getName());
-			purinDonationPopUp.setAmount(donationForm.getAmount());
-			purinDonationPopUp.setMessage(donationForm.getMessage());
-			purinDonationPopUp.setFlag(0);
-			purinDonationPopUpRepo.save(purinDonationPopUp);
-			break;
-		default:
-			break;
+			case "ChivesWang":
+				ChivesWangDonationPopUp chivesWangDonationPopUp = new ChivesWangDonationPopUp();
+				chivesWangDonationPopUp.setMerchant_trade_no(merchantTradeNo);
+				chivesWangDonationPopUp.setName(donationForm.getName());
+				chivesWangDonationPopUp.setAmount(donationForm.getAmount());
+				chivesWangDonationPopUp.setMessage(donationForm.getMessage());
+				chivesWangDonationPopUp.setFlag(0);
+				chivesWangDonationPopUpRepo.save(chivesWangDonationPopUp);
+				break;
+			case "ChristinHunt":
+				ChristinHuntDonationPopUp christinHuntDonationPopUp = new ChristinHuntDonationPopUp();
+				christinHuntDonationPopUp.setMerchant_trade_no(merchantTradeNo);
+				christinHuntDonationPopUp.setName(donationForm.getName());
+				christinHuntDonationPopUp.setAmount(donationForm.getAmount());
+				christinHuntDonationPopUp.setMessage(donationForm.getMessage());
+				christinHuntDonationPopUp.setFlag(0);
+				christinHuntDonationPopUpRepo.save(christinHuntDonationPopUp);
+				break;
+			case "Elinora":
+				ElinoraDonationPopUp elinoraDonationPopUp = new ElinoraDonationPopUp();
+				elinoraDonationPopUp.setMerchant_trade_no(merchantTradeNo);
+				elinoraDonationPopUp.setName(donationForm.getName());
+				elinoraDonationPopUp.setAmount(donationForm.getAmount());
+				elinoraDonationPopUp.setMessage(donationForm.getMessage());
+				elinoraDonationPopUp.setFlag(0);
+				elinoraDonationPopUpRepo.save(elinoraDonationPopUp);
+				break;
+			case "Purin":
+				PurinDonationPopUp purinDonationPopUp = new PurinDonationPopUp();
+				purinDonationPopUp.setMerchant_trade_no(merchantTradeNo);
+				purinDonationPopUp.setName(donationForm.getName());
+				purinDonationPopUp.setAmount(donationForm.getAmount());
+				purinDonationPopUp.setMessage(donationForm.getMessage());
+				purinDonationPopUp.setFlag(0);
+				purinDonationPopUpRepo.save(purinDonationPopUp);
+				break;
+			default:
+				break;
 		}
 		log.info("currentTime = [" + currentTime + "]");
 		log.info("merchant_trade_no = [" + merchantTradeNo + "]");

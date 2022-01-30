@@ -22,9 +22,11 @@ public class ChivesWangPopUpController {
 		model.addAttribute("name", "ChivesWang");
 		return "popup-iframe";
 	}
+	
 	@GetMapping("/ChivesWang-iframe")
 	public String iframe(Model model) {
 		model.addAttribute("name", "ChivesWang");
+		model.addAttribute("donation-pic", "220124_ChivesWang.gif");
 		return "donation-pop-up";
 	}
 }

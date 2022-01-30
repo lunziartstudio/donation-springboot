@@ -54,8 +54,7 @@ public class IsThereANewDonationController {
 	@GetMapping("/is-there-a-new-donation")
 	public DonationPopUp isThereNewDonation(@RequestParam String streamer) {
 		// Query is there a new donation.
-		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
-		httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
 		List<ChivesWangDonationPopUp> chivesWangDonationList = null;
 		List<ChristinHuntDonationPopUp> christinHuntDonationPopUpList = null;
 		List<ElinoraDonationPopUp> elinoraDonationPopUpList = null;

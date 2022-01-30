@@ -25,6 +25,7 @@ public class ElinoraPopUpController {
 	@GetMapping("/Elinora-iframe")
 	public String iframe(Model model) {
 		model.addAttribute("name", "Elinora");
+		model.addAttribute("donation-pic", "220124_Elinora.gif");
 		return "donation-pop-up";
 	}
 }
