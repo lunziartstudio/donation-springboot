@@ -69,7 +69,7 @@
 							name="amount"
 							type="number" class="field__input" placeholder="...請輸入整數金額，最少35元"
 							required="required" oninvalid="this.setCustomValidity('最少35')"
-							onchange="setCustomValidity('')"
+							oninput="setCustomValidity('')"
 							min=35
 							autocomplete="off"> <span
 							class="field__label-wrap"> <span class="field__label">
